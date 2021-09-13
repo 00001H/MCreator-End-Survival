@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "end_survival:block/spawnpoint_setter"
+    }
+  }
+}

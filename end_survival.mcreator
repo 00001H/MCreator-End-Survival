@@ -728,6 +728,86 @@
       "locked_code": false,
       "ids": {},
       "registry_name": "red_chunk_to_dust"
+    },
+    {
+      "name": "SetWorldSpawn",
+      "type": "procedure",
+      "sortid": 66,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "set_world_spawn",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          },
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetWorldSpawnSilent",
+      "type": "procedure",
+      "sortid": 67,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "set_world_spawn_silent",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "x",
+            "type": "number"
+          },
+          {
+            "name": "y",
+            "type": "number"
+          },
+          {
+            "name": "z",
+            "type": "number"
+          },
+          {
+            "name": "world",
+            "type": "world"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpawnpointSetter",
+      "type": "block",
+      "sortid": 66,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "spawnpoint_setter"
+    },
+    {
+      "name": "SpawnpointSetterRecipe",
+      "type": "recipe",
+      "sortid": 68,
+      "compiles": true,
+      "locked_code": false,
+      "ids": {},
+      "registry_name": "spawnpoint_setter_recipe"
     }
   ],
   "variable_elements": [
@@ -759,6 +839,7 @@
   "sound_elements": [],
   "language_map": {
     "en_us": {
+      "block.end_survival.spawnpoint_setter": "Spawnpoint Setter",
       "item.end_survival.overworld_passv_2": "Overworld Pass v2",
       "item.end_survival.overworld_passv_3": "Overworld Pass v3",
       "block.end_survival.end_emerald_ore": "End Emerald Ore",
@@ -776,6 +857,7 @@
       "block.end_survival.end_iron_ore": "End Iron Ore"
     },
     "zh_cn": {
+      "block.end_survival.spawnpoint_setter": "Spawnpoint Setter",
       "item.end_survival.overworld_passv_2": "Overworld Passv 1",
       "item.end_survival.overworld_passv_3": "Overworld Passv 1",
       "block.end_survival.end_emerald_ore": "Ä©µØÂÌ±¦Ê¯¿ó",

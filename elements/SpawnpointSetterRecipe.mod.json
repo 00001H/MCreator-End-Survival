@@ -1,0 +1,46 @@
+{
+  "_fv": 24,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Crafting",
+    "xpReward": 0.0,
+    "cookingTime": 200,
+    "recipeRetstackSize": 1,
+    "group": "spawn_setter",
+    "recipeShapeless": false,
+    "recipeSlots": [
+      {
+        "value": "Blocks.DIAMOND_BLOCK"
+      },
+      {
+        "value": "CUSTOM:EndEssence"
+      },
+      {
+        "value": "Blocks.DIAMOND_BLOCK"
+      },
+      {
+        "value": "Items.ENDER_EYE"
+      },
+      {
+        "value": "CUSTOM:OverworldPassv1"
+      },
+      {
+        "value": "Items.ENDER_EYE"
+      },
+      {
+        "value": "CUSTOM:EndEssence"
+      },
+      {
+        "value": "CUSTOM:EndEssence"
+      },
+      {
+        "value": "CUSTOM:EndEssence"
+      }
+    ],
+    "recipeReturnStack": {
+      "value": "CUSTOM:SpawnpointSetter"
+    },
+    "name": "spawnpoint_setter_recipe",
+    "namespace": "mod"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "end_survival:blocks/spawnset",
+    "up": "end_survival:blocks/spawnset",
+    "north": "end_survival:blocks/spawnset",
+    "east": "end_survival:blocks/spawnset",
+    "south": "end_survival:blocks/spawnset",
+    "west": "end_survival:blocks/spawnset",
+    "particle": "end_survival:blocks/spawnset"
+  }
+}
