@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "end_survival:blocks/endstone",
+    "up": "end_survival:blocks/endcraftertop",
+    "north": "end_survival:blocks/endstone",
+    "east": "end_survival:blocks/endstone",
+    "south": "end_survival:blocks/endstone",
+    "west": "end_survival:blocks/endstone",
+    "particle": "end_survival:blocks/endstone"
+  }
+}

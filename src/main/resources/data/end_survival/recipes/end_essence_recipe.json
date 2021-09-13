@@ -1,0 +1,42 @@
+{
+  "group": "end_ess_ingot",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    "345",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "1": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "2": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "3": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "4": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "5": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "6": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "7": {
+      "item": "end_survival:end_essence_nugget"
+    },
+    "8": {
+      "item": "end_survival:end_essence_nugget"
+    }
+  },
+  "result": {
+    "item": "end_survival:end_essence",
+    "count": 1
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "_fv": 24,
+  "_type": "item",
+  "definition": {
+    "renderType": 0,
+    "texture": "overworldpassv2",
+    "customModelName": "Normal",
+    "name": "Overworld Pass v2",
+    "rarity": "COMMON",
+    "creativeTab": {
+      "value": "TOOLS"
+    },
+    "stackSize": 5,
+    "enchantability": 0,
+    "useDuration": 0,
+    "toolType": 1.0,
+    "damageCount": 0,
+    "recipeRemainder": {
+      "value": ""
+    },
+    "destroyAnyBlock": false,
+    "immuneToFire": false,
+    "stayInGridWhenCrafting": false,
+    "damageOnCrafting": false,
+    "enableMeleeDamage": false,
+    "damageVsEntity": 0.0,
+    "specialInfo": [
+      "Grants 10 minutes"
+    ],
+    "hasGlow": false,
+    "guiBoundTo": "<NONE>",
+    "inventorySize": 0,
+    "inventoryStackSize": 64,
+    "onRightClickedInAir": {
+      "name": "GrantOverworldTime"
+    },
+    "hasDispenseBehavior": false
+  }
+}

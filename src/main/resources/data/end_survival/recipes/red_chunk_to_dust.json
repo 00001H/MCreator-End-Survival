@@ -1,0 +1,16 @@
+{
+  "group": "redstone_dst",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "0"
+  ],
+  "key": {
+    "0": {
+      "item": "end_survival:redstone_chunk"
+    }
+  },
+  "result": {
+    "item": "minecraft:redstone",
+    "count": 5
+  }
+}

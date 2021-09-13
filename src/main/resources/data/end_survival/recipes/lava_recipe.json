@@ -1,0 +1,36 @@
+{
+  "group": "lava",
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "012",
+    " 4 ",
+    "678"
+  ],
+  "key": {
+    "0": {
+      "item": "minecraft:stone"
+    },
+    "1": {
+      "item": "minecraft:stone"
+    },
+    "2": {
+      "item": "minecraft:stone"
+    },
+    "4": {
+      "item": "minecraft:bucket"
+    },
+    "6": {
+      "tag": "minecraft:coals"
+    },
+    "7": {
+      "tag": "minecraft:coals"
+    },
+    "8": {
+      "tag": "minecraft:coals"
+    }
+  },
+  "result": {
+    "item": "minecraft:lava_bucket",
+    "count": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "item.end_survival.overworld_passv_2": "Overworld Passv 1",
+  "item.end_survival.overworld_passv_3": "Overworld Passv 1",
+  "block.end_survival.end_emerald_ore": "末地绿宝石矿",
+  "item.end_survival.edible_pearl": "可食用珍珠",
+  "block.end_survival.ender_crafter": "Heat Condenser",
+  "item.end_survival.overworld_passv_1": "Overworld Passv 1",
+  "block.end_survival.end_redstone_ore": "End Emerald Ore",
+  "item.end_survival.redstone_chunk": "Redstone Chunk",
+  "block.end_survival.end_wood_ore": "末地木头矿",
+  "block.end_survival.end_coal_ore": "末地煤矿",
+  "item.end_survival.end_essence_nugget": "End Essence Nugget",
+  "block.end_survival.heat_condenser": "热能收集器",
+  "item.end_survival.end_essence": "End Essence",
+  "block.end_survival.end_essence_extractor": "末地精华提取器",
+  "block.end_survival.end_iron_ore": "末地铁矿"
+}

@@ -1,0 +1,12 @@
+{
+  "group": "iron_blast",
+  "type": "minecraft:blasting",
+  "experience": 2,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "end_survival:end_iron_ore"
+  },
+  "result": {
+    "item": "minecraft:iron_ingot"
+  }
+}

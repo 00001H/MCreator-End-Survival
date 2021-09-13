@@ -1,0 +1,12 @@
+{
+  "group": "emerald_blast",
+  "type": "minecraft:blasting",
+  "experience": 4,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "end_survival:end_emerald_ore"
+  },
+  "result": {
+    "item": "minecraft:emerald"
+  }
+}

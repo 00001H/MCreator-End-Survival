@@ -1,0 +1,34 @@
+{
+  "_fv": 24,
+  "_type": "overlay",
+  "definition": {
+    "priority": "NORMAL",
+    "components": [
+      {
+        "type": "label",
+        "data": {
+          "text": "Remaining:<VAR:RMins>:<VAR:RSecs>",
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "name": "Remaining:<VAR:RMins>:<VAR:RSecs>",
+          "x": 5,
+          "y": 4
+        }
+      }
+    ],
+    "baseTexture": "",
+    "overlayTarget": "Ingame",
+    "displayCondition": {
+      "name": "TimeLeftDisplayOverlayIngame"
+    },
+    "gridSettings": {
+      "sx": 20,
+      "sy": 18,
+      "ox": 7,
+      "oy": 7,
+      "snapOnGrid": false
+    }
+  }
+}

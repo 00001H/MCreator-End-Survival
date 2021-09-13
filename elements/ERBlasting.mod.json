@@ -1,0 +1,20 @@
+{
+  "_fv": 24,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Blasting",
+    "xpReward": 3.0,
+    "cookingTime": 100,
+    "recipeRetstackSize": 1,
+    "group": "redstone_blast",
+    "recipeShapeless": false,
+    "blastingInputStack": {
+      "value": "CUSTOM:EndRedstoneOre"
+    },
+    "blastingReturnStack": {
+      "value": "CUSTOM:RedstoneChunk"
+    },
+    "name": "er_blasting",
+    "namespace": "mod"
+  }
+}

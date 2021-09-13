@@ -1,0 +1,12 @@
+{
+  "group": "redstone_blast",
+  "type": "minecraft:blasting",
+  "experience": 3,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "end_survival:end_redstone_ore"
+  },
+  "result": {
+    "item": "end_survival:redstone_chunk"
+  }
+}

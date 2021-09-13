@@ -1,0 +1,13 @@
+{
+  "group": "end_ess_nggt",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "end_survival:end_essence"
+    }
+  ],
+  "result": {
+    "item": "end_survival:end_essence_nugget",
+    "count": 9
+  }
+}

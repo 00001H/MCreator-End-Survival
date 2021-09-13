@@ -1,0 +1,20 @@
+{
+  "_fv": 24,
+  "_type": "recipe",
+  "definition": {
+    "recipeType": "Blasting",
+    "xpReward": 2.0,
+    "cookingTime": 100,
+    "recipeRetstackSize": 1,
+    "group": "coal_blast",
+    "recipeShapeless": false,
+    "blastingInputStack": {
+      "value": "CUSTOM:EndCoalOre"
+    },
+    "blastingReturnStack": {
+      "value": "Items.COAL#0"
+    },
+    "name": "ec_blasting",
+    "namespace": "mod"
+  }
+}

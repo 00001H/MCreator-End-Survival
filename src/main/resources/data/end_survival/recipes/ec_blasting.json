@@ -1,0 +1,12 @@
+{
+  "group": "coal_blast",
+  "type": "minecraft:blasting",
+  "experience": 2,
+  "cookingtime": 100,
+  "ingredient": {
+    "item": "end_survival:end_coal_ore"
+  },
+  "result": {
+    "item": "minecraft:coal"
+  }
+}

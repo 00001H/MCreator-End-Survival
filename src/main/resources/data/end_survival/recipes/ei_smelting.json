@@ -1,0 +1,12 @@
+{
+  "group": "iron",
+  "type": "minecraft:smelting",
+  "experience": 2,
+  "cookingtime": 200,
+  "ingredient": {
+    "item": "end_survival:end_iron_ore"
+  },
+  "result": {
+    "item": "minecraft:iron_ingot"
+  }
+}

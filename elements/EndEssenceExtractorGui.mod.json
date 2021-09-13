@@ -1,0 +1,123 @@
+{
+  "_fv": 24,
+  "_type": "gui",
+  "definition": {
+    "type": 1,
+    "width": 200,
+    "height": 184,
+    "inventoryOffsetX": 0,
+    "inventoryOffsetY": 4,
+    "renderBgLayer": true,
+    "doesPauseGame": false,
+    "components": [
+      {
+        "type": "inputslot",
+        "data": {
+          "inputLimit": {
+            "value": "Blocks.END_STONE"
+          },
+          "id": 0,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #0",
+          "x": 150,
+          "y": 70
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 1,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #1",
+          "x": 258,
+          "y": 70
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "End Essence Extractor",
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "name": "End Essence Extractor",
+          "x": 159,
+          "y": 34
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Convertion:<BNBT:number:pct>%",
+          "color": {
+            "value": -12829636,
+            "falpha": 0.0
+          },
+          "name": "Convertion:<BNBT:number:pct>%",
+          "x": 159,
+          "y": 88
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "End Stone",
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "name": "End Stone",
+          "x": 132,
+          "y": 52
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Stone",
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "name": "Stone",
+          "x": 258,
+          "y": 52
+        }
+      },
+      {
+        "type": "outputslot",
+        "data": {
+          "id": 2,
+          "disableStackInteraction": false,
+          "dropItemsWhenNotBound": true,
+          "name": "Slot #2",
+          "x": 204,
+          "y": 70
+        }
+      },
+      {
+        "type": "label",
+        "data": {
+          "text": "Essence",
+          "color": {
+            "value": -16777216,
+            "falpha": 0.0
+          },
+          "name": "Essence",
+          "x": 195,
+          "y": 52
+        }
+      }
+    ],
+    "gridSettings": {
+      "sx": 18,
+      "sy": 36,
+      "ox": 10,
+      "oy": 30,
+      "snapOnGrid": true
+    }
+  }
+}

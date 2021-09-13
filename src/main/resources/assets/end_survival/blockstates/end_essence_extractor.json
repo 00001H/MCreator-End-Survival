@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "end_survival:block/end_essence_extractor"
+    },
+    "facing=east": {
+      "model": "end_survival:block/end_essence_extractor",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "end_survival:block/end_essence_extractor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "end_survival:block/end_essence_extractor",
+      "y": 270
+    }
+  }
+}
