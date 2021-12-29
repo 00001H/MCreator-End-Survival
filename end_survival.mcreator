@@ -1,5 +1,4 @@
 {
-  "id_map": {},
   "mod_elements": [
     {
       "name": "Creation",
@@ -7,7 +6,6 @@
       "sortid": 3,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "creation",
       "metadata": {
         "dependencies": [
@@ -24,7 +22,6 @@
       "sortid": 5,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "freeze_player",
       "metadata": {
         "dependencies": [
@@ -41,7 +38,6 @@
       "sortid": 6,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "to_end_right_clicked_in_air",
       "metadata": {
         "dependencies": [
@@ -62,7 +58,6 @@
       "sortid": 7,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_coal_drops"
     },
     {
@@ -71,7 +66,6 @@
       "sortid": 8,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_coal_ore_block_destroyed_by_player",
       "metadata": {
         "dependencies": [
@@ -100,7 +94,6 @@
       "sortid": 7,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_coal_ore"
     },
     {
@@ -109,7 +102,6 @@
       "sortid": 9,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_iron_ore"
     },
     {
@@ -118,7 +110,6 @@
       "sortid": 10,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_wood_ore"
     },
     {
@@ -127,7 +118,6 @@
       "sortid": 12,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ec_smelting"
     },
     {
@@ -136,7 +126,6 @@
       "sortid": 13,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ec_blasting"
     },
     {
@@ -145,7 +134,6 @@
       "sortid": 14,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ei_smelting"
     },
     {
@@ -154,7 +142,6 @@
       "sortid": 15,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ei_blasting"
     },
     {
@@ -163,7 +150,6 @@
       "sortid": 21,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_emerald_ore"
     },
     {
@@ -172,7 +158,6 @@
       "sortid": 22,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ee_smelting"
     },
     {
@@ -181,7 +166,6 @@
       "sortid": 23,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ee_blasting"
     },
     {
@@ -190,7 +174,6 @@
       "sortid": 25,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_extractor"
     },
     {
@@ -199,7 +182,6 @@
       "sortid": 26,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ban_return",
       "metadata": {
         "dependencies": [
@@ -220,7 +202,6 @@
       "sortid": 28,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_extractor_gui"
     },
     {
@@ -229,7 +210,6 @@
       "sortid": 29,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_extractor_block_added",
       "metadata": {
         "dependencies": [
@@ -258,7 +238,6 @@
       "sortid": 30,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_extractor_update_tick",
       "metadata": {
         "dependencies": [
@@ -287,7 +266,6 @@
       "sortid": 31,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "lava_recipe"
     },
     {
@@ -296,7 +274,6 @@
       "sortid": 32,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_extractor_recipe"
     },
     {
@@ -305,7 +282,6 @@
       "sortid": 33,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "edible_pearl"
     },
     {
@@ -314,7 +290,6 @@
       "sortid": 34,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "edible_pearl_recipe"
     },
     {
@@ -323,7 +298,6 @@
       "sortid": 35,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "heat_condenser"
     },
     {
@@ -332,7 +306,6 @@
       "sortid": 36,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "heat_condenser_gui"
     },
     {
@@ -341,7 +314,6 @@
       "sortid": 37,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "heat_conderser_update_tick",
       "metadata": {
         "dependencies": [
@@ -370,7 +342,6 @@
       "sortid": 38,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "heat_condenser_block_added",
       "metadata": {
         "dependencies": [
@@ -399,7 +370,6 @@
       "sortid": 39,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "heat_condenser_recipe"
     },
     {
@@ -408,7 +378,6 @@
       "sortid": 41,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_redstone_ore"
     },
     {
@@ -417,7 +386,6 @@
       "sortid": 42,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_redstone_drops"
     },
     {
@@ -426,7 +394,6 @@
       "sortid": 43,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "to_end_timer_expire",
       "metadata": {
         "dependencies": [
@@ -444,7 +411,6 @@
       "sortid": 44,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "overworld_passv_1",
       "path": "~/OverworldPasses"
     },
@@ -454,7 +420,6 @@
       "sortid": 45,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "no_nether",
       "metadata": {
         "dependencies": [
@@ -471,7 +436,6 @@
       "sortid": 46,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "grant_overworld_time",
       "metadata": {
         "dependencies": [
@@ -489,7 +453,6 @@
       "sortid": 47,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "overworld_passv_2",
       "path": "~/OverworldPasses"
     },
@@ -499,7 +462,6 @@
       "sortid": 48,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "overworld_passv_3",
       "path": "~/OverworldPasses"
     },
@@ -509,7 +471,6 @@
       "sortid": 49,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "time_left_display_overlay_ingame",
       "metadata": {
         "return_type": "logic",
@@ -528,7 +489,6 @@
       "sortid": 49,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "time_left",
       "path": "~/OverworldPasses"
     },
@@ -538,7 +498,6 @@
       "sortid": 50,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ender_crafter"
     },
     {
@@ -547,7 +506,6 @@
       "sortid": 51,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_crafter_gui"
     },
     {
@@ -556,7 +514,6 @@
       "sortid": 52,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence"
     },
     {
@@ -565,7 +522,6 @@
       "sortid": 53,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_nugget"
     },
     {
@@ -574,7 +530,6 @@
       "sortid": 54,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_nugget_recipe"
     },
     {
@@ -583,7 +538,6 @@
       "sortid": 55,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_essence_recipe"
     },
     {
@@ -592,7 +546,6 @@
       "sortid": 56,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "ender_crafter_recipe"
     },
     {
@@ -601,7 +554,6 @@
       "sortid": 57,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_crafter_on_craft",
       "metadata": {
         "dependencies": [
@@ -618,7 +570,6 @@
       "sortid": 58,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "end_diamond_ore_block_destroyed_by_player",
       "metadata": {
         "dependencies": [
@@ -647,7 +598,6 @@
       "sortid": 59,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "remove_time_command_executed",
       "metadata": {
         "dependencies": [
@@ -664,7 +614,6 @@
       "sortid": 59,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "remove_time"
     },
     {
@@ -673,7 +622,6 @@
       "sortid": 60,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "to_end_cmd"
     },
     {
@@ -682,7 +630,6 @@
       "sortid": 61,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "player_join",
       "metadata": {
         "dependencies": [
@@ -699,7 +646,6 @@
       "sortid": 62,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "er_smelting"
     },
     {
@@ -708,7 +654,6 @@
       "sortid": 63,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "er_blasting"
     },
     {
@@ -717,7 +662,6 @@
       "sortid": 64,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "redstone_chunk"
     },
     {
@@ -726,7 +670,6 @@
       "sortid": 65,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "red_chunk_to_dust"
     },
     {
@@ -735,7 +678,6 @@
       "sortid": 66,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "set_world_spawn",
       "metadata": {
         "dependencies": [
@@ -768,7 +710,6 @@
       "sortid": 67,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "set_world_spawn_silent",
       "metadata": {
         "dependencies": [
@@ -797,7 +738,6 @@
       "sortid": 66,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "spawnpoint_setter"
     },
     {
@@ -806,7 +746,6 @@
       "sortid": 68,
       "compiles": true,
       "locked_code": false,
-      "ids": {},
       "registry_name": "spawnpoint_setter_recipe"
     }
   ],
@@ -898,7 +837,7 @@
     "dependencies": [],
     "dependants": [],
     "mcreatorDependencies": [],
-    "currentGenerator": "forge-1.16.5",
+    "currentGenerator": "forge-1.17.1",
     "credits": "Created using mod maker MCreator - https://mcreator.net/about",
     "modElementsPackage": "net.mcreator.endsurvival",
     "lockBaseModFiles": false

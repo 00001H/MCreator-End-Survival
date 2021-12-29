@@ -1,0 +1,14 @@
+{
+  "replace": false,
+  "values": [
+    "end_survival:end_coal_ore",
+    "end_survival:end_iron_ore",
+    "end_survival:end_wood_ore",
+    "end_survival:end_emerald_ore",
+    "end_survival:end_essence_extractor",
+    "end_survival:heat_condenser",
+    "end_survival:end_redstone_ore",
+    "end_survival:ender_crafter",
+    "end_survival:spawnpoint_setter"
+  ]
+}
