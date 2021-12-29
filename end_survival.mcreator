@@ -92,7 +92,7 @@
       "name": "EndCoalOre",
       "type": "block",
       "sortid": 7,
-      "compiles": false,
+      "compiles": true,
       "locked_code": false,
       "registry_name": "end_coal_ore"
     },
@@ -148,7 +148,7 @@
       "name": "EndEmeraldOre",
       "type": "block",
       "sortid": 21,
-      "compiles": false,
+      "compiles": true,
       "locked_code": false,
       "registry_name": "end_emerald_ore"
     },
@@ -172,7 +172,7 @@
       "name": "EndEssenceExtractor",
       "type": "block",
       "sortid": 25,
-      "compiles": false,
+      "compiles": true,
       "locked_code": false,
       "registry_name": "end_essence_extractor"
     },
@@ -496,7 +496,7 @@
       "name": "EnderCrafter",
       "type": "block",
       "sortid": 50,
-      "compiles": false,
+      "compiles": true,
       "locked_code": false,
       "registry_name": "ender_crafter"
     },
