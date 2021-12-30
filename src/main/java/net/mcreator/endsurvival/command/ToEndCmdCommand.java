@@ -6,18 +6,18 @@ public class ToEndCmdCommand {
 
 	@SubscribeEvent
 	public static void registerCommands(RegisterCommandsEvent event) {
-		event.getDispatcher().register(Commands.literal("go_end")
+		event.getDispatcher().register(LiteralArgumentBuilder.<CommandSource>literal("go_end")
 
 				.then(Commands.argument("arguments", StringArgumentType.greedyString()).executes(ToEndCmdCommand::execute))
 				.executes(ToEndCmdCommand::execute));
 	}
 
-	private static int execute(CommandContext<CommandSourceStack> ctx) {
-		ServerLevel world = ctx.getSource().getLevel();
+	private static int execute(CommandContext<CommandSource> ctx) {
+		ServerWorld world = ctx.getSource().getWorld();
 
-		double x = ctx.getSource().getPosition().x();
-		double y = ctx.getSource().getPosition().y();
-		double z = ctx.getSource().getPosition().z();
+		double x = ctx.getSource().getPos().getX();
+		double y = ctx.getSource().getPos().getY();
+		double z = ctx.getSource().getPos().getZ();
 
 		Entity entity = ctx.getSource().getEntity();
 		if (entity == null)
@@ -31,7 +31,9 @@ public class ToEndCmdCommand {
 			index[0]++;
 		});
 
-		ToEndRightClickedInAirProcedure.execute(world, entity);
+		ToEndRightClickedInAirProcedure
+				.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("entity", entity))
+						.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
 
 		return 0;
 	}

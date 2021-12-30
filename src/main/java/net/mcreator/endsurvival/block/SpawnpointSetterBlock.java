@@ -1,62 +1,87 @@
 
 package net.mcreator.endsurvival.block;
 
-import net.minecraft.world.level.material.Material;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.SoundEvent;
 
-public class SpawnpointSetterBlock extends Block {
+@EndSurvivalModElements.ModElement.Tag
+public class SpawnpointSetterBlock extends EndSurvivalModElements.ModElement {
 
-	public SpawnpointSetterBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(1f, 10f).lightLevel(s -> 5).requiresCorrectToolForDrops());
+	@ObjectHolder("end_survival:spawnpoint_setter")
+	public static final Block block = null;
 
-		setRegistryName("spawnpoint_setter");
+	public SpawnpointSetterBlock(EndSurvivalModElements instance) {
+		super(instance, 66);
+
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 15;
+	public void initElements() {
+		elements.blocks.add(() -> new CustomBlock());
+		elements.items.add(() -> new BlockItem(block, new Item.Properties().group(ItemGroup.REDSTONE)).setRegistryName(block.getRegistryName()));
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem()instanceof TieredItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 1;
-		return false;
-	}
+	public static class CustomBlock extends Block {
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+		public CustomBlock() {
+			super(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(1f, 10f).setLightLevel(s -> 5).harvestLevel(1)
+					.harvestTool(ToolType.PICKAXE).setRequiresTool());
 
-		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-		if (!dropsOriginal.isEmpty())
-			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(this, 1));
-	}
-
-	@Override
-	public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
-		super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
-		if (world.getBestNeighborSignal(pos) > 0) {
-			SetWorldSpawnSilentProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+			setRegistryName("spawnpoint_setter");
 		}
-	}
 
-	@Override
-	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
+		@Override
+		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return 15;
+		}
 
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
+		@Override
+		public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 
-		SetWorldSpawnProcedure.execute(world, x, y, z, entity);
+			List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+			if (!dropsOriginal.isEmpty())
+				return dropsOriginal;
+			return Collections.singletonList(new ItemStack(this, 1));
+		}
 
-		return InteractionResult.SUCCESS;
+		@Override
+		public void neighborChanged(BlockState blockstate, World world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
+			super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			if (world.getRedstonePowerFromNeighbors(new BlockPos(x, y, z)) > 0) {
+
+				SetWorldSpawnSilentProcedure.executeProcedure(Stream
+						.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x),
+								new AbstractMap.SimpleEntry<>("y", y), new AbstractMap.SimpleEntry<>("z", z))
+						.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+			} else {
+			}
+		}
+
+		@Override
+		public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos pos, PlayerEntity entity, Hand hand,
+				BlockRayTraceResult hit) {
+			super.onBlockActivated(blockstate, world, pos, entity, hand, hit);
+
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+
+			double hitX = hit.getHitVec().x;
+			double hitY = hit.getHitVec().y;
+			double hitZ = hit.getHitVec().z;
+			Direction direction = hit.getFace();
+
+			SetWorldSpawnProcedure.executeProcedure(Stream
+					.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x), new AbstractMap.SimpleEntry<>("y", y),
+							new AbstractMap.SimpleEntry<>("z", z), new AbstractMap.SimpleEntry<>("entity", entity))
+					.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+
+			return ActionResultType.SUCCESS;
+		}
+
 	}
 
 }

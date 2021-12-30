@@ -2,30 +2,46 @@ package net.mcreator.endsurvival.procedures;
 
 import net.minecraftforge.eventbus.api.Event;
 
-@Mod.EventBusSubscriber
 public class PlayerJoinProcedure {
-	@SubscribeEvent
-	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
-		Entity entity = event.getPlayer();
-		execute(event, entity);
+
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
+			Entity entity = event.getPlayer();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", entity.getPosX());
+			dependencies.put("y", entity.getPosY());
+			dependencies.put("z", entity.getPosZ());
+			dependencies.put("world", entity.world);
+			dependencies.put("entity", entity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
 
-	public static void execute(Entity entity) {
-		execute(null, entity);
-	}
-
-	private static void execute(@Nullable Event event, Entity entity) {
-		if (entity == null)
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure PlayerJoin!");
 			return;
-		if (entity instanceof Player _player && !_player.level.isClientSide())
-			_player.displayClientMessage(new TextComponent("[Mod Notice/End Survival]Use /go_end to go to the end"), (false));
+		}
+
+		Entity entity = (Entity) dependencies.get("entity");
+
+		if (entity instanceof PlayerEntity && !entity.world.isRemote()) {
+			((PlayerEntity) entity).sendStatusMessage(new StringTextComponent("[Mod Notice/End Survival]Use /go_end to go to the end"), (false));
+		}
 		if (!(entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 				.orElse(new EndSurvivalModVariables.PlayerVariables())).IsntFirst) {
 			{
 				Entity _ent = entity;
-				if (!_ent.level.isClientSide() && _ent.getServer() != null)
-					_ent.getServer().getCommands().performCommand(_ent.createCommandSourceStack().withSuppressedOutput().withPermission(4), "go_end");
+				if (!_ent.world.isRemote && _ent.world.getServer() != null) {
+					_ent.world.getServer().getCommandManager().handleCommand(_ent.getCommandSource().withFeedbackDisabled().withPermissionLevel(4),
+							"go_end");
+				}
 			}
 		}
 	}
+
 }

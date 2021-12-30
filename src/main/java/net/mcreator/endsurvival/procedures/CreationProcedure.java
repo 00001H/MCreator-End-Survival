@@ -2,24 +2,41 @@ package net.mcreator.endsurvival.procedures;
 
 import net.minecraftforge.eventbus.api.Event;
 
-@Mod.EventBusSubscriber
 public class CreationProcedure {
-	@SubscribeEvent
-	public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
-		Entity entity = event.getEntityLiving();
-		execute(event, entity);
-	}
 
-	public static void execute(Entity entity) {
-		execute(null, entity);
-	}
-
-	private static void execute(@Nullable Event event, Entity entity) {
-		if (entity == null)
-			return;
-		if (entity instanceof EnderDragon) {
-			if (entity instanceof LivingEntity _entity)
-				_entity.setHealth(0);
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onEntityTick(LivingEvent.LivingUpdateEvent event) {
+			Entity entity = event.getEntityLiving();
+			World world = entity.world;
+			double i = entity.getPosX();
+			double j = entity.getPosY();
+			double k = entity.getPosZ();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
 		}
 	}
+
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure Creation!");
+			return;
+		}
+
+		Entity entity = (Entity) dependencies.get("entity");
+
+		if (entity instanceof EnderDragonEntity) {
+			if (entity instanceof LivingEntity)
+				((LivingEntity) entity).setHealth((float) 0);
+		}
+	}
+
 }

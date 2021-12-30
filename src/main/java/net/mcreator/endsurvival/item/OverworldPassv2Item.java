@@ -1,36 +1,65 @@
 
 package net.mcreator.endsurvival.item;
 
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.attributes.Attributes;
 
-public class OverworldPassv2Item extends Item {
+@EndSurvivalModElements.ModElement.Tag
+public class OverworldPassv2Item extends EndSurvivalModElements.ModElement {
 
-	public OverworldPassv2Item() {
-		super(new Item.Properties().tab(CreativeModeTab.TAB_TOOLS).stacksTo(5).rarity(Rarity.COMMON));
-		setRegistryName("overworld_passv_2");
+	@ObjectHolder("end_survival:overworld_passv_2")
+	public static final Item block = null;
+
+	public OverworldPassv2Item(EndSurvivalModElements instance) {
+		super(instance, 47);
+
 	}
 
 	@Override
-	public int getUseDuration(ItemStack itemstack) {
-		return 0;
+	public void initElements() {
+		elements.items.add(() -> new ItemCustom());
 	}
 
-	@Override
-	public void appendHoverText(ItemStack itemstack, Level world, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, world, list, flag);
-		list.add(new TextComponent("Grants 10 minutes"));
-	}
+	public static class ItemCustom extends Item {
 
-	@Override
-	public InteractionResultHolder<ItemStack> use(Level world, Player entity, InteractionHand hand) {
-		InteractionResultHolder<ItemStack> ar = super.use(world, entity, hand);
-		ItemStack itemstack = ar.getObject();
-		double x = entity.getX();
-		double y = entity.getY();
-		double z = entity.getZ();
+		public ItemCustom() {
+			super(new Item.Properties().group(ItemGroup.TOOLS).maxStackSize(5).rarity(Rarity.COMMON));
+			setRegistryName("overworld_passv_2");
+		}
 
-		GrantOverworldTimeProcedure.execute(entity);
-		return ar;
+		@Override
+		public int getItemEnchantability() {
+			return 0;
+		}
+
+		@Override
+		public int getUseDuration(ItemStack itemstack) {
+			return 0;
+		}
+
+		@Override
+		public float getDestroySpeed(ItemStack par1ItemStack, BlockState par2Block) {
+			return 1F;
+		}
+
+		@Override
+		public void addInformation(ItemStack itemstack, World world, List<ITextComponent> list, ITooltipFlag flag) {
+			super.addInformation(itemstack, world, list, flag);
+			list.add(new StringTextComponent("Grants 10 minutes"));
+		}
+
+		@Override
+		public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity entity, Hand hand) {
+			ActionResult<ItemStack> ar = super.onItemRightClick(world, entity, hand);
+			ItemStack itemstack = ar.getResult();
+			double x = entity.getPosX();
+			double y = entity.getPosY();
+			double z = entity.getPosZ();
+
+			GrantOverworldTimeProcedure.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("entity", entity)).collect(HashMap::new,
+					(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+			return ar;
+		}
+
 	}
 
 }

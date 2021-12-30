@@ -3,250 +3,571 @@ package net.mcreator.endsurvival.procedures;
 import net.minecraftforge.eventbus.api.Event;
 
 public class EndCrafterOnCraftProcedure {
-	public static void execute(Entity entity) {
-		if (entity == null)
+
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure EndCrafterOnCraft!");
 			return;
+		}
+
+		Entity entity = (Entity) dependencies.get("entity");
+
 		boolean success = false;
 		double i = 0;
 		double Consumption = 0;
-		success = true;
-		if ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr && _splr.get()instanceof Map _slt
-				? ((Slot) _slt.get(0)).getItem()
-				: ItemStack.EMPTY).getItem() == Blocks.GRASS_BLOCK.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(3)).getItem() : ItemStack.EMPTY).getItem() == Blocks.GRASS_BLOCK.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(1)).getItem() : ItemStack.EMPTY).getItem() == Blocks.OAK_SAPLING.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY).getItem() == Items.CHORUS_FRUIT
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(4)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.END_ESSENCE
-				&& new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
+		success = (true);
+		if ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (0))).getItem() == Blocks.GRASS_BLOCK.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (3))).getItem() == Blocks.GRASS_BLOCK.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (1))).getItem() == Blocks.OAK_SAPLING.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (2))).getItem() == Items.CHORUS_FRUIT && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (4))).getItem() == EndEssenceItem.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
 							if (stack != null)
 								return stack.getCount();
 						}
-						return 0;
 					}
-				}.getAmount(4) > 0
-				&& ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(5)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_1
-						&& new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) < 5 || new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) == 0)) {
+				}
+				return 0;
+			}
+		}.getAmount((int) (4)) > 0 && ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (5))).getItem() == OverworldPassv1Item.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) < 5 || new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) == 0)) {
 			Consumption = 1;
-			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get()instanceof Map _slots) {
-				ItemStack _setstack = new ItemStack(EndSurvivalModItems.OVERWORLD_PASSV_1);
-				_setstack.setCount((int) (new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-							if (stack != null)
-								return stack.getCount();
-						}
-						return 0;
+			if (entity instanceof PlayerEntity) {
+				Container _current = ((PlayerEntity) entity).openContainer;
+				if (_current instanceof Supplier) {
+					Object invobj = ((Supplier) _current).get();
+					if (invobj instanceof Map) {
+						ItemStack _setstack = new ItemStack(OverworldPassv1Item.block);
+						_setstack.setCount((int) (new Object() {
+							public int getAmount(int sltid) {
+								if (entity instanceof ServerPlayerEntity) {
+									Container _current = ((ServerPlayerEntity) entity).openContainer;
+									if (_current instanceof Supplier) {
+										Object invobj = ((Supplier) _current).get();
+										if (invobj instanceof Map) {
+											ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+											if (stack != null)
+												return stack.getCount();
+										}
+									}
+								}
+								return 0;
+							}
+						}.getAmount((int) (5)) + 1));
+						((Slot) ((Map) invobj).get((int) (5))).putStack(_setstack);
+						_current.detectAndSendChanges();
 					}
-				}.getAmount(5) + 1));
-				((Slot) _slots.get(5)).set(_setstack);
-				_player.containerMenu.broadcastChanges();
+				}
 			}
-		} else if ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-				&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY)
-						.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_1
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(3)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_1
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(1)).getItem() : ItemStack.EMPTY)
-								.getItem() == Blocks.BIRCH_SAPLING.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY).getItem() == Blocks.WHITE_WOOL.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(4)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.END_ESSENCE
-				&& new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
+		} else if ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (0))).getItem() == OverworldPassv1Item.block && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (3))).getItem() == OverworldPassv1Item.block && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (1))).getItem() == Blocks.BIRCH_SAPLING.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (2))).getItem() == Blocks.WHITE_WOOL.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (4))).getItem() == EndEssenceItem.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
 							if (stack != null)
 								return stack.getCount();
 						}
-						return 0;
 					}
-				}.getAmount(4) > 1
-				&& ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(5)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_2
-						&& new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) < 5 || new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) == 0)) {
+				}
+				return 0;
+			}
+		}.getAmount((int) (4)) > 1 && ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (5))).getItem() == OverworldPassv2Item.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) < 5 || new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) == 0)) {
 			Consumption = 2;
-			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get()instanceof Map _slots) {
-				ItemStack _setstack = new ItemStack(EndSurvivalModItems.OVERWORLD_PASSV_2);
-				_setstack.setCount((int) (new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-							if (stack != null)
-								return stack.getCount();
-						}
-						return 0;
+			if (entity instanceof PlayerEntity) {
+				Container _current = ((PlayerEntity) entity).openContainer;
+				if (_current instanceof Supplier) {
+					Object invobj = ((Supplier) _current).get();
+					if (invobj instanceof Map) {
+						ItemStack _setstack = new ItemStack(OverworldPassv2Item.block);
+						_setstack.setCount((int) (new Object() {
+							public int getAmount(int sltid) {
+								if (entity instanceof ServerPlayerEntity) {
+									Container _current = ((ServerPlayerEntity) entity).openContainer;
+									if (_current instanceof Supplier) {
+										Object invobj = ((Supplier) _current).get();
+										if (invobj instanceof Map) {
+											ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+											if (stack != null)
+												return stack.getCount();
+										}
+									}
+								}
+								return 0;
+							}
+						}.getAmount((int) (5)) + 1));
+						((Slot) ((Map) invobj).get((int) (5))).putStack(_setstack);
+						_current.detectAndSendChanges();
 					}
-				}.getAmount(5) + 1));
-				((Slot) _slots.get(5)).set(_setstack);
-				_player.containerMenu.broadcastChanges();
+				}
 			}
-		} else if ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-				&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(0)).getItem() : ItemStack.EMPTY)
-						.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_2
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(3)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_2
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(1)).getItem() : ItemStack.EMPTY).getItem() == Items.PUMPKIN_SEEDS
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(2)).getItem() : ItemStack.EMPTY).getItem() == Blocks.SUGAR_CANE.asItem()
-				&& (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(4)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.END_ESSENCE
-				&& new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
+		} else if ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (0))).getItem() == OverworldPassv2Item.block && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (3))).getItem() == OverworldPassv2Item.block && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (1))).getItem() == Items.PUMPKIN_SEEDS && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (2))).getItem() == Blocks.SUGAR_CANE.asItem() && (new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (4))).getItem() == EndEssenceItem.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
 							if (stack != null)
 								return stack.getCount();
 						}
-						return 0;
 					}
-				}.getAmount(4) > 9
-				&& ((entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-						&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get(5)).getItem() : ItemStack.EMPTY)
-								.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_3
-						&& new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) < 5 || new Object() {
-							public int getAmount(int sltid) {
-								if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-										&& _current.get()instanceof Map _slots) {
-									ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-									if (stack != null)
-										return stack.getCount();
-								}
-								return 0;
-							}
-						}.getAmount(5) == 0)) {
+				}
+				return 0;
+			}
+		}.getAmount((int) (4)) > 9 && ((new Object() {
+			public ItemStack getItemStack(int sltid) {
+				Entity _ent = entity;
+				if (_ent instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) _ent).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							return ((Slot) ((Map) invobj).get(sltid)).getStack();
+						}
+					}
+				}
+				return ItemStack.EMPTY;
+			}
+		}.getItemStack((int) (5))).getItem() == OverworldPassv3Item.block && new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) < 5 || new Object() {
+			public int getAmount(int sltid) {
+				if (entity instanceof ServerPlayerEntity) {
+					Container _current = ((ServerPlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+							if (stack != null)
+								return stack.getCount();
+						}
+					}
+				}
+				return 0;
+			}
+		}.getAmount((int) (5)) == 0)) {
 			Consumption = 10;
-			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get()instanceof Map _slots) {
-				ItemStack _setstack = new ItemStack(EndSurvivalModItems.OVERWORLD_PASSV_3);
-				_setstack.setCount((int) (new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-							if (stack != null)
-								return stack.getCount();
-						}
-						return 0;
+			if (entity instanceof PlayerEntity) {
+				Container _current = ((PlayerEntity) entity).openContainer;
+				if (_current instanceof Supplier) {
+					Object invobj = ((Supplier) _current).get();
+					if (invobj instanceof Map) {
+						ItemStack _setstack = new ItemStack(OverworldPassv3Item.block);
+						_setstack.setCount((int) (new Object() {
+							public int getAmount(int sltid) {
+								if (entity instanceof ServerPlayerEntity) {
+									Container _current = ((ServerPlayerEntity) entity).openContainer;
+									if (_current instanceof Supplier) {
+										Object invobj = ((Supplier) _current).get();
+										if (invobj instanceof Map) {
+											ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+											if (stack != null)
+												return stack.getCount();
+										}
+									}
+								}
+								return 0;
+							}
+						}.getAmount((int) (5)) + 1));
+						((Slot) ((Map) invobj).get((int) (5))).putStack(_setstack);
+						_current.detectAndSendChanges();
 					}
-				}.getAmount(5) + 1));
-				((Slot) _slots.get(5)).set(_setstack);
-				_player.containerMenu.broadcastChanges();
+				}
 			}
 		} else {
-			success = false;
+			success = (false);
 		}
 		if (success) {
 			i = 0;
 			for (int index0 = 0; index0 < (int) (4); index0++) {
-				if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-						&& _current.get()instanceof Map _slots) {
-					ItemStack _setstack = (entity instanceof ServerPlayer _plrSlotItem && _plrSlotItem.containerMenu instanceof Supplier _splr
-							&& _splr.get()instanceof Map _slt ? ((Slot) _slt.get((int) i)).getItem() : ItemStack.EMPTY);
-					_setstack.setCount((int) (new Object() {
-						public int getAmount(int sltid) {
-							if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-									&& _current.get()instanceof Map _slots) {
-								ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-								if (stack != null)
-									return stack.getCount();
-							}
-							return 0;
+				if (entity instanceof PlayerEntity) {
+					Container _current = ((PlayerEntity) entity).openContainer;
+					if (_current instanceof Supplier) {
+						Object invobj = ((Supplier) _current).get();
+						if (invobj instanceof Map) {
+							ItemStack _setstack = (new Object() {
+								public ItemStack getItemStack(int sltid) {
+									Entity _ent = entity;
+									if (_ent instanceof ServerPlayerEntity) {
+										Container _current = ((ServerPlayerEntity) _ent).openContainer;
+										if (_current instanceof Supplier) {
+											Object invobj = ((Supplier) _current).get();
+											if (invobj instanceof Map) {
+												return ((Slot) ((Map) invobj).get(sltid)).getStack();
+											}
+										}
+									}
+									return ItemStack.EMPTY;
+								}
+							}.getItemStack((int) (i)));
+							_setstack.setCount((int) (new Object() {
+								public int getAmount(int sltid) {
+									if (entity instanceof ServerPlayerEntity) {
+										Container _current = ((ServerPlayerEntity) entity).openContainer;
+										if (_current instanceof Supplier) {
+											Object invobj = ((Supplier) _current).get();
+											if (invobj instanceof Map) {
+												ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+												if (stack != null)
+													return stack.getCount();
+											}
+										}
+									}
+									return 0;
+								}
+							}.getAmount((int) (i)) - 1));
+							((Slot) ((Map) invobj).get((int) (i))).putStack(_setstack);
+							_current.detectAndSendChanges();
 						}
-					}.getAmount((int) i) - 1));
-					((Slot) _slots.get((int) i)).set(_setstack);
-					_player.containerMenu.broadcastChanges();
-				}
-				i = i + 1;
-			}
-			if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current && _current.get()instanceof Map _slots) {
-				ItemStack _setstack = new ItemStack(EndSurvivalModItems.END_ESSENCE);
-				_setstack.setCount((int) (new Object() {
-					public int getAmount(int sltid) {
-						if (entity instanceof ServerPlayer _player && _player.containerMenu instanceof Supplier _current
-								&& _current.get()instanceof Map _slots) {
-							ItemStack stack = ((Slot) _slots.get(sltid)).getItem();
-							if (stack != null)
-								return stack.getCount();
-						}
-						return 0;
 					}
-				}.getAmount(4) - Consumption));
-				((Slot) _slots.get(4)).set(_setstack);
-				_player.containerMenu.broadcastChanges();
+				}
+				i = (i + 1);
+			}
+			if (entity instanceof PlayerEntity) {
+				Container _current = ((PlayerEntity) entity).openContainer;
+				if (_current instanceof Supplier) {
+					Object invobj = ((Supplier) _current).get();
+					if (invobj instanceof Map) {
+						ItemStack _setstack = new ItemStack(EndEssenceItem.block);
+						_setstack.setCount((int) (new Object() {
+							public int getAmount(int sltid) {
+								if (entity instanceof ServerPlayerEntity) {
+									Container _current = ((ServerPlayerEntity) entity).openContainer;
+									if (_current instanceof Supplier) {
+										Object invobj = ((Supplier) _current).get();
+										if (invobj instanceof Map) {
+											ItemStack stack = ((Slot) ((Map) invobj).get(sltid)).getStack();;
+											if (stack != null)
+												return stack.getCount();
+										}
+									}
+								}
+								return 0;
+							}
+						}.getAmount((int) (4)) - Consumption));
+						((Slot) ((Map) invobj).get((int) (4))).putStack(_setstack);
+						_current.detectAndSendChanges();
+					}
+				}
 			}
 		}
 	}
+
 }

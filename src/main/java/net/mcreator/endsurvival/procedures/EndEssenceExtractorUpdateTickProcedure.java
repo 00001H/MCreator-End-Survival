@@ -1,27 +1,40 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.items.IItemHandlerModifiable;
-import net.minecraftforge.items.CapabilityItemHandler;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.core.BlockPos;
-
-import net.mcreator.endsurvival.init.EndSurvivalModItems;
-
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.atomic.AtomicInteger;
+import net.minecraftforge.eventbus.api.Event;
 
 public class EndEssenceExtractorUpdateTickProcedure {
-	public static void execute(LevelAccessor world, double x, double y, double z) {
+
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("world") == null) {
+			if (!dependencies.containsKey("world"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency world for procedure EndEssenceExtractorUpdateTick!");
+			return;
+		}
+		if (dependencies.get("x") == null) {
+			if (!dependencies.containsKey("x"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency x for procedure EndEssenceExtractorUpdateTick!");
+			return;
+		}
+		if (dependencies.get("y") == null) {
+			if (!dependencies.containsKey("y"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency y for procedure EndEssenceExtractorUpdateTick!");
+			return;
+		}
+		if (dependencies.get("z") == null) {
+			if (!dependencies.containsKey("z"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency z for procedure EndEssenceExtractorUpdateTick!");
+			return;
+		}
+
+		IWorld world = (IWorld) dependencies.get("world");
+		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
+		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
+		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
+
 		if (new Object() {
-			public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+			public int getAmount(IWorld world, BlockPos pos, int sltid) {
 				AtomicInteger _retval = new AtomicInteger(0);
-				BlockEntity _ent = world.getBlockEntity(pos);
+				TileEntity _ent = world.getTileEntity(pos);
 				if (_ent != null) {
 					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 						_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -29,10 +42,10 @@ public class EndEssenceExtractorUpdateTickProcedure {
 				}
 				return _retval.get();
 			}
-		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 0) >= 1 && (new Object() {
-			public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int sltid) {
+		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (0)) >= 1 && (new Object() {
+			public ItemStack getItemStack(BlockPos pos, int sltid) {
 				AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
-				BlockEntity _ent = world.getBlockEntity(pos);
+				TileEntity _ent = world.getTileEntity(pos);
 				if (_ent != null) {
 					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 						_retval.set(capability.getStackInSlot(sltid).copy());
@@ -40,10 +53,10 @@ public class EndEssenceExtractorUpdateTickProcedure {
 				}
 				return _retval.get();
 			}
-		}.getItemStack(world, new BlockPos((int) x, (int) y, (int) z), 0)).getItem() == Blocks.END_STONE.asItem() && new Object() {
-			public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+		}.getItemStack(new BlockPos((int) x, (int) y, (int) z), (int) (0))).getItem() == Blocks.END_STONE.asItem() && new Object() {
+			public int getAmount(IWorld world, BlockPos pos, int sltid) {
 				AtomicInteger _retval = new AtomicInteger(0);
-				BlockEntity _ent = world.getBlockEntity(pos);
+				TileEntity _ent = world.getTileEntity(pos);
 				if (_ent != null) {
 					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 						_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -51,10 +64,10 @@ public class EndEssenceExtractorUpdateTickProcedure {
 				}
 				return _retval.get();
 			}
-		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 1) < 64 && new Object() {
-			public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (1)) < 64 && new Object() {
+			public int getAmount(IWorld world, BlockPos pos, int sltid) {
 				AtomicInteger _retval = new AtomicInteger(0);
-				BlockEntity _ent = world.getBlockEntity(pos);
+				TileEntity _ent = world.getTileEntity(pos);
 				if (_ent != null) {
 					_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 						_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -62,35 +75,36 @@ public class EndEssenceExtractorUpdateTickProcedure {
 				}
 				return _retval.get();
 			}
-		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 2) < 64) {
-			if (!world.isClientSide()) {
+		}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (2)) < 64) {
+			if (!world.isRemote()) {
 				BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
-				BlockEntity _blockEntity = world.getBlockEntity(_bp);
+				TileEntity _tileEntity = world.getTileEntity(_bp);
 				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
-					_blockEntity.getTileData().putDouble("pct", (new Object() {
-						public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-							BlockEntity blockEntity = world.getBlockEntity(pos);
-							if (blockEntity != null)
-								return blockEntity.getTileData().getDouble(tag);
+				if (_tileEntity != null)
+					_tileEntity.getTileData().putDouble("pct", (new Object() {
+						public double getValue(IWorld world, BlockPos pos, String tag) {
+							TileEntity tileEntity = world.getTileEntity(pos);
+							if (tileEntity != null)
+								return tileEntity.getTileData().getDouble(tag);
 							return -1;
 						}
 					}.getValue(world, new BlockPos((int) x, (int) y, (int) z), "pct") + 1));
-				if (world instanceof Level _level)
-					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+
+				if (world instanceof World)
+					((World) world).notifyBlockUpdate(_bp, _bs, _bs, 3);
 			}
 			if (new Object() {
-				public double getValue(LevelAccessor world, BlockPos pos, String tag) {
-					BlockEntity blockEntity = world.getBlockEntity(pos);
-					if (blockEntity != null)
-						return blockEntity.getTileData().getDouble(tag);
+				public double getValue(IWorld world, BlockPos pos, String tag) {
+					TileEntity tileEntity = world.getTileEntity(pos);
+					if (tileEntity != null)
+						return tileEntity.getTileData().getDouble(tag);
 					return -1;
 				}
 			}.getValue(world, new BlockPos((int) x, (int) y, (int) z), "pct") >= 100) {
 				if ((new Object() {
-					public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int sltid) {
+					public ItemStack getItemStack(BlockPos pos, int sltid) {
 						AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
-						BlockEntity _ent = world.getBlockEntity(pos);
+						TileEntity _ent = world.getTileEntity(pos);
 						if (_ent != null) {
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 								_retval.set(capability.getStackInSlot(sltid).copy());
@@ -98,16 +112,16 @@ public class EndEssenceExtractorUpdateTickProcedure {
 						}
 						return _retval.get();
 					}
-				}.getItemStack(world, new BlockPos((int) x, (int) y, (int) z), 1)).getItem() == Blocks.STONE.asItem()) {
+				}.getItemStack(new BlockPos((int) x, (int) y, (int) z), (int) (1))).getItem() == Blocks.STONE.asItem()) {
 					{
-						BlockEntity _ent = world.getBlockEntity(new BlockPos((int) x, (int) y, (int) z));
+						TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));
 						if (_ent != null) {
-							final int _sltid = 1;
+							final int _sltid = (int) (1);
 							final ItemStack _setstack = new ItemStack(Blocks.STONE);
 							_setstack.setCount((int) (new Object() {
-								public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+								public int getAmount(IWorld world, BlockPos pos, int sltid) {
 									AtomicInteger _retval = new AtomicInteger(0);
-									BlockEntity _ent = world.getBlockEntity(pos);
+									TileEntity _ent = world.getTileEntity(pos);
 									if (_ent != null) {
 										_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 											_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -115,7 +129,7 @@ public class EndEssenceExtractorUpdateTickProcedure {
 									}
 									return _retval.get();
 								}
-							}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 1) + 1));
+							}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (1)) + 1));
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 								if (capability instanceof IItemHandlerModifiable) {
 									((IItemHandlerModifiable) capability).setStackInSlot(_sltid, _setstack);
@@ -125,11 +139,11 @@ public class EndEssenceExtractorUpdateTickProcedure {
 					}
 				} else {
 					{
-						BlockEntity _ent = world.getBlockEntity(new BlockPos((int) x, (int) y, (int) z));
+						TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));
 						if (_ent != null) {
-							final int _sltid = 1;
+							final int _sltid = (int) (1);
 							final ItemStack _setstack = new ItemStack(Blocks.STONE);
-							_setstack.setCount(1);
+							_setstack.setCount((int) 1);
 							_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 								if (capability instanceof IItemHandlerModifiable) {
 									((IItemHandlerModifiable) capability).setStackInSlot(_sltid, _setstack);
@@ -140,9 +154,9 @@ public class EndEssenceExtractorUpdateTickProcedure {
 				}
 				if (Math.random() < 0.55) {
 					if ((new Object() {
-						public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int sltid) {
+						public ItemStack getItemStack(BlockPos pos, int sltid) {
 							AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
-							BlockEntity _ent = world.getBlockEntity(pos);
+							TileEntity _ent = world.getTileEntity(pos);
 							if (_ent != null) {
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 									_retval.set(capability.getStackInSlot(sltid).copy());
@@ -150,16 +164,16 @@ public class EndEssenceExtractorUpdateTickProcedure {
 							}
 							return _retval.get();
 						}
-					}.getItemStack(world, new BlockPos((int) x, (int) y, (int) z), 2)).getItem() == EndSurvivalModItems.END_ESSENCE_NUGGET) {
+					}.getItemStack(new BlockPos((int) x, (int) y, (int) z), (int) (2))).getItem() == EndEssenceNuggetItem.block) {
 						{
-							BlockEntity _ent = world.getBlockEntity(new BlockPos((int) x, (int) y, (int) z));
+							TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));
 							if (_ent != null) {
-								final int _sltid = 2;
-								final ItemStack _setstack = new ItemStack(EndSurvivalModItems.END_ESSENCE_NUGGET);
+								final int _sltid = (int) (2);
+								final ItemStack _setstack = new ItemStack(EndEssenceNuggetItem.block);
 								_setstack.setCount((int) (new Object() {
-									public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+									public int getAmount(IWorld world, BlockPos pos, int sltid) {
 										AtomicInteger _retval = new AtomicInteger(0);
-										BlockEntity _ent = world.getBlockEntity(pos);
+										TileEntity _ent = world.getTileEntity(pos);
 										if (_ent != null) {
 											_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 												_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -167,7 +181,7 @@ public class EndEssenceExtractorUpdateTickProcedure {
 										}
 										return _retval.get();
 									}
-								}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 2) + 1));
+								}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (2)) + 1));
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 									if (capability instanceof IItemHandlerModifiable) {
 										((IItemHandlerModifiable) capability).setStackInSlot(_sltid, _setstack);
@@ -177,11 +191,11 @@ public class EndEssenceExtractorUpdateTickProcedure {
 						}
 					} else {
 						{
-							BlockEntity _ent = world.getBlockEntity(new BlockPos((int) x, (int) y, (int) z));
+							TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));
 							if (_ent != null) {
-								final int _sltid = 2;
-								final ItemStack _setstack = new ItemStack(EndSurvivalModItems.END_ESSENCE_NUGGET);
-								_setstack.setCount(1);
+								final int _sltid = (int) (2);
+								final ItemStack _setstack = new ItemStack(EndEssenceNuggetItem.block);
+								_setstack.setCount((int) 1);
 								_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 									if (capability instanceof IItemHandlerModifiable) {
 										((IItemHandlerModifiable) capability).setStackInSlot(_sltid, _setstack);
@@ -192,14 +206,14 @@ public class EndEssenceExtractorUpdateTickProcedure {
 					}
 				}
 				{
-					BlockEntity _ent = world.getBlockEntity(new BlockPos((int) x, (int) y, (int) z));
+					TileEntity _ent = world.getTileEntity(new BlockPos((int) x, (int) y, (int) z));
 					if (_ent != null) {
-						final int _sltid = 0;
+						final int _sltid = (int) (0);
 						final ItemStack _setstack = new ItemStack(Blocks.END_STONE);
 						_setstack.setCount((int) (new Object() {
-							public int getAmount(LevelAccessor world, BlockPos pos, int sltid) {
+							public int getAmount(IWorld world, BlockPos pos, int sltid) {
 								AtomicInteger _retval = new AtomicInteger(0);
-								BlockEntity _ent = world.getBlockEntity(pos);
+								TileEntity _ent = world.getTileEntity(pos);
 								if (_ent != null) {
 									_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 										_retval.set(capability.getStackInSlot(sltid).getCount());
@@ -207,7 +221,7 @@ public class EndEssenceExtractorUpdateTickProcedure {
 								}
 								return _retval.get();
 							}
-						}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), 0) - 1));
+						}.getAmount(world, new BlockPos((int) x, (int) y, (int) z), (int) (0)) - 1));
 						_ent.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null).ifPresent(capability -> {
 							if (capability instanceof IItemHandlerModifiable) {
 								((IItemHandlerModifiable) capability).setStackInSlot(_sltid, _setstack);
@@ -215,26 +229,29 @@ public class EndEssenceExtractorUpdateTickProcedure {
 						});
 					}
 				}
-				if (!world.isClientSide()) {
+				if (!world.isRemote()) {
 					BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
-					BlockEntity _blockEntity = world.getBlockEntity(_bp);
+					TileEntity _tileEntity = world.getTileEntity(_bp);
 					BlockState _bs = world.getBlockState(_bp);
-					if (_blockEntity != null)
-						_blockEntity.getTileData().putDouble("pct", 0);
-					if (world instanceof Level _level)
-						_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+					if (_tileEntity != null)
+						_tileEntity.getTileData().putDouble("pct", 0);
+
+					if (world instanceof World)
+						((World) world).notifyBlockUpdate(_bp, _bs, _bs, 3);
 				}
 			}
 		} else {
-			if (!world.isClientSide()) {
+			if (!world.isRemote()) {
 				BlockPos _bp = new BlockPos((int) x, (int) y, (int) z);
-				BlockEntity _blockEntity = world.getBlockEntity(_bp);
+				TileEntity _tileEntity = world.getTileEntity(_bp);
 				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
-					_blockEntity.getTileData().putDouble("pct", 0);
-				if (world instanceof Level _level)
-					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
+				if (_tileEntity != null)
+					_tileEntity.getTileData().putDouble("pct", 0);
+
+				if (world instanceof World)
+					((World) world).notifyBlockUpdate(_bp, _bs, _bs, 3);
 			}
 		}
 	}
+
 }

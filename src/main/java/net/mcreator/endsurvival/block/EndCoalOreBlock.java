@@ -1,40 +1,124 @@
 
 package net.mcreator.endsurvival.block;
 
-import net.minecraft.world.level.material.Material;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.SoundEvent;
 
-public class EndCoalOreBlock extends Block {
+@EndSurvivalModElements.ModElement.Tag
+public class EndCoalOreBlock extends EndSurvivalModElements.ModElement {
 
-	public EndCoalOreBlock() {
-		super(BlockBehaviour.Properties.of(Material.STONE).sound(SoundType.STONE).strength(3.1999999999999997f, 9f).requiresCorrectToolForDrops());
+	@ObjectHolder("end_survival:end_coal_ore")
+	public static final Block block = null;
 
-		setRegistryName("end_coal_ore");
+	public EndCoalOreBlock(EndSurvivalModElements instance) {
+		super(instance, 7);
+
+		MinecraftForge.EVENT_BUS.register(this);
+		FMLJavaModLoadingContext.get().getModEventBus().register(new FeatureRegisterHandler());
+
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 15;
+	public void initElements() {
+		elements.blocks.add(() -> new CustomBlock());
+		elements.items
+				.add(() -> new BlockItem(block, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(block.getRegistryName()));
 	}
 
-	@Override
-	public MaterialColor defaultMaterialColor() {
-		return MaterialColor.SAND;
+	public static class CustomBlock extends Block {
+
+		public CustomBlock() {
+			super(Block.Properties.create(Material.ROCK).sound(SoundType.STONE).hardnessAndResistance(3.1999999999999997f, 9f).setLightLevel(s -> 0)
+					.harvestLevel(0).harvestTool(ToolType.PICKAXE).setRequiresTool());
+
+			setRegistryName("end_coal_ore");
+		}
+
+		@Override
+		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return 15;
+		}
+
+		@Override
+		public MaterialColor getMaterialColor() {
+			return MaterialColor.SAND;
+		}
+
+		@Override
+		public boolean removedByPlayer(BlockState blockstate, World world, BlockPos pos, PlayerEntity entity, boolean willHarvest, FluidState fluid) {
+			boolean retval = super.removedByPlayer(blockstate, world, pos, entity, willHarvest, fluid);
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+
+			EndCoalOreBlockDestroyedByPlayerProcedure.executeProcedure(Stream
+					.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x), new AbstractMap.SimpleEntry<>("y", y),
+							new AbstractMap.SimpleEntry<>("z", z))
+					.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+			return retval;
+		}
+
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem()instanceof TieredItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 0;
-		return false;
+	private static Feature<OreFeatureConfig> feature = null;
+	private static ConfiguredFeature<?, ?> configuredFeature = null;
+
+	private static IRuleTestType<CustomRuleTest> CUSTOM_MATCH = null;
+
+	private static class CustomRuleTest extends RuleTest {
+
+		static final CustomRuleTest INSTANCE = new CustomRuleTest();
+		static final com.mojang.serialization.Codec<CustomRuleTest> codec = com.mojang.serialization.Codec.unit(() -> INSTANCE);
+
+		public boolean test(BlockState blockAt, Random random) {
+			boolean blockCriteria = false;
+
+			if (blockAt.getBlock() == Blocks.END_STONE)
+				blockCriteria = true;
+
+			return blockCriteria;
+		}
+
+		protected IRuleTestType<?> getType() {
+			return CUSTOM_MATCH;
+		}
+
 	}
 
-	@Override
-	public boolean removedByPlayer(BlockState blockstate, Level world, BlockPos pos, Player entity, boolean willHarvest, FluidState fluid) {
-		boolean retval = super.removedByPlayer(blockstate, world, pos, entity, willHarvest, fluid);
-		EndCoalOreBlockDestroyedByPlayerProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
-		return retval;
+	private static class FeatureRegisterHandler {
+
+		@SubscribeEvent
+		public void registerFeature(RegistryEvent.Register<Feature<?>> event) {
+			CUSTOM_MATCH = Registry.register(Registry.RULE_TEST, new ResourceLocation("end_survival:end_coal_ore_match"), () -> CustomRuleTest.codec);
+
+			feature = new OreFeature(OreFeatureConfig.CODEC) {
+				@Override
+				public boolean generate(ISeedReader world, ChunkGenerator generator, Random rand, BlockPos pos, OreFeatureConfig config) {
+					RegistryKey<World> dimensionType = world.getWorld().getDimensionKey();
+					boolean dimensionCriteria = false;
+
+					if (dimensionType == World.THE_END)
+						dimensionCriteria = true;
+
+					if (!dimensionCriteria)
+						return false;
+
+					return super.generate(world, generator, rand, pos, config);
+				}
+			};
+
+			configuredFeature = feature.withConfiguration(new OreFeatureConfig(CustomRuleTest.INSTANCE, block.getDefaultState(), 13)).range(255)
+					.square().func_242731_b(5);
+
+			event.getRegistry().register(feature.setRegistryName("end_coal_ore"));
+			Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, new ResourceLocation("end_survival:end_coal_ore"), configuredFeature);
+		}
+
+	}
+
+	@SubscribeEvent
+	public void addFeatureToBiomes(BiomeLoadingEvent event) {
+		event.getGeneration().getFeatures(GenerationStage.Decoration.UNDERGROUND_ORES).add(() -> configuredFeature);
 	}
 
 }

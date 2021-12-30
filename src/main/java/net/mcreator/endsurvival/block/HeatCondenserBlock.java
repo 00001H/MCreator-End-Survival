@@ -1,125 +1,296 @@
 
 package net.mcreator.endsurvival.block;
 
-import net.minecraft.world.level.material.Material;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties;
+import net.minecraft.block.material.Material;
+import net.minecraft.util.SoundEvent;
 
-public class HeatCondenserBlock extends Block
-		implements
+@EndSurvivalModElements.ModElement.Tag
+public class HeatCondenserBlock extends EndSurvivalModElements.ModElement {
 
-			EntityBlock {
+	@ObjectHolder("end_survival:heat_condenser")
+	public static final Block block = null;
 
-	public HeatCondenserBlock() {
-		super(BlockBehaviour.Properties.of(Material.METAL).sound(SoundType.METAL).strength(3.5f, 9f).lightLevel(s -> 1)
-				.requiresCorrectToolForDrops());
+	@ObjectHolder("end_survival:heat_condenser")
+	public static final TileEntityType<CustomTileEntity> tileEntityType = null;
 
-		setRegistryName("heat_condenser");
+	public HeatCondenserBlock(EndSurvivalModElements instance) {
+		super(instance, 35);
+
+		FMLJavaModLoadingContext.get().getModEventBus().register(new TileEntityRegisterHandler());
+
 	}
 
 	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 14;
+	public void initElements() {
+		elements.blocks.add(() -> new CustomBlock());
+		elements.items
+				.add(() -> new BlockItem(block, new Item.Properties().group(ItemGroup.BUILDING_BLOCKS)).setRegistryName(block.getRegistryName()));
 	}
 
-	@Override
-	public boolean canHarvestBlock(BlockState state, BlockGetter world, BlockPos pos, Player player) {
-		if (player.getInventory().getSelected().getItem()instanceof TieredItem tieredItem)
-			return tieredItem.getTier().getLevel() >= 1;
-		return false;
+	private static class TileEntityRegisterHandler {
+		@SubscribeEvent
+		public void registerTileEntity(RegistryEvent.Register<TileEntityType<?>> event) {
+			event.getRegistry().register(TileEntityType.Builder.create(CustomTileEntity::new, block).build(null).setRegistryName("heat_condenser"));
+		}
 	}
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+	public static class CustomBlock extends Block {
 
-		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-		if (!dropsOriginal.isEmpty())
-			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(this, 1));
-	}
+		public CustomBlock() {
+			super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.5f, 9f).setLightLevel(s -> 1).harvestLevel(1)
+					.harvestTool(ToolType.PICKAXE).setRequiresTool());
 
-	@Override
-	public void onPlace(BlockState blockstate, Level world, BlockPos pos, BlockState oldState, boolean moving) {
-		super.onPlace(blockstate, world, pos, oldState, moving);
-		world.getBlockTicks().scheduleTick(pos, this, 20);
-		HeatCondenserBlockAddedProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
-	}
-
-	@Override
-	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, Random random) {
-		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		HeatConderserUpdateTickProcedure.execute(world, x, y, z);
-
-		world.getBlockTicks().scheduleTick(pos, this, 20);
-	}
-
-	@Override
-	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		if (entity instanceof ServerPlayer player) {
-			NetworkHooks.openGui(player, new MenuProvider() {
-				@Override
-				public Component getDisplayName() {
-					return new TextComponent("Heat Condenser");
-				}
-
-				@Override
-				public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new HeatCondenserGuiMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-				}
-			}, pos);
+			setRegistryName("heat_condenser");
 		}
 
-		return InteractionResult.SUCCESS;
-	}
+		@Override
+		public int getOpacity(BlockState state, IBlockReader worldIn, BlockPos pos) {
+			return 14;
+		}
 
-	@Override
-	public MenuProvider getMenuProvider(BlockState state, Level worldIn, BlockPos pos) {
-		BlockEntity tileEntity = worldIn.getBlockEntity(pos);
-		return tileEntity instanceof MenuProvider menuProvider ? menuProvider : null;
-	}
+		@Override
+		public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
 
-	@Override
-	public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-		return new HeatCondenserBlockEntity(pos, state);
-	}
+			List<ItemStack> dropsOriginal = super.getDrops(state, builder);
+			if (!dropsOriginal.isEmpty())
+				return dropsOriginal;
+			return Collections.singletonList(new ItemStack(this, 1));
+		}
 
-	@Override
-	public boolean triggerEvent(BlockState state, Level world, BlockPos pos, int eventID, int eventParam) {
-		super.triggerEvent(state, world, pos, eventID, eventParam);
-		BlockEntity blockEntity = world.getBlockEntity(pos);
-		return blockEntity == null ? false : blockEntity.triggerEvent(eventID, eventParam);
-	}
+		@Override
+		public void onBlockAdded(BlockState blockstate, World world, BlockPos pos, BlockState oldState, boolean moving) {
+			super.onBlockAdded(blockstate, world, pos, oldState, moving);
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+			world.getPendingBlockTicks().scheduleTick(pos, this, 20);
 
-	@Override
-	public void onRemove(BlockState state, Level world, BlockPos pos, BlockState newState, boolean isMoving) {
-		if (state.getBlock() != newState.getBlock()) {
-			BlockEntity blockEntity = world.getBlockEntity(pos);
-			if (blockEntity instanceof HeatCondenserBlockEntity be) {
-				Containers.dropContents(world, pos, be);
-				world.updateNeighbourForOutputSignal(pos, this);
+			HeatCondenserBlockAddedProcedure.executeProcedure(Stream
+					.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x), new AbstractMap.SimpleEntry<>("y", y),
+							new AbstractMap.SimpleEntry<>("z", z))
+					.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+		}
+
+		@Override
+		public void tick(BlockState blockstate, ServerWorld world, BlockPos pos, Random random) {
+			super.tick(blockstate, world, pos, random);
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+
+			HeatConderserUpdateTickProcedure.executeProcedure(Stream
+					.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("x", x), new AbstractMap.SimpleEntry<>("y", y),
+							new AbstractMap.SimpleEntry<>("z", z))
+					.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
+
+			world.getPendingBlockTicks().scheduleTick(pos, this, 20);
+		}
+
+		@Override
+		public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos pos, PlayerEntity entity, Hand hand,
+				BlockRayTraceResult hit) {
+			super.onBlockActivated(blockstate, world, pos, entity, hand, hit);
+
+			int x = pos.getX();
+			int y = pos.getY();
+			int z = pos.getZ();
+
+			if (entity instanceof ServerPlayerEntity) {
+				NetworkHooks.openGui((ServerPlayerEntity) entity, new INamedContainerProvider() {
+					@Override
+					public ITextComponent getDisplayName() {
+						return new StringTextComponent("Heat Condenser");
+					}
+
+					@Override
+					public Container createMenu(int id, PlayerInventory inventory, PlayerEntity player) {
+						return new HeatCondenserGuiGui.GuiContainerMod(id, inventory,
+								new PacketBuffer(Unpooled.buffer()).writeBlockPos(new BlockPos(x, y, z)));
+					}
+				}, new BlockPos(x, y, z));
 			}
 
-			super.onRemove(state, world, pos, newState, isMoving);
+			return ActionResultType.SUCCESS;
 		}
+
+		@Override
+		public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
+			TileEntity tileEntity = worldIn.getTileEntity(pos);
+			return tileEntity instanceof INamedContainerProvider ? (INamedContainerProvider) tileEntity : null;
+		}
+
+		@Override
+		public boolean hasTileEntity(BlockState state) {
+			return true;
+		}
+
+		@Override
+		public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+			return new CustomTileEntity();
+		}
+
+		@Override
+		public boolean eventReceived(BlockState state, World world, BlockPos pos, int eventID, int eventParam) {
+			super.eventReceived(state, world, pos, eventID, eventParam);
+			TileEntity tileentity = world.getTileEntity(pos);
+			return tileentity == null ? false : tileentity.receiveClientEvent(eventID, eventParam);
+		}
+
+		@Override
+		public void onReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean isMoving) {
+			if (state.getBlock() != newState.getBlock()) {
+				TileEntity tileentity = world.getTileEntity(pos);
+				if (tileentity instanceof CustomTileEntity) {
+					InventoryHelper.dropInventoryItems(world, pos, (CustomTileEntity) tileentity);
+					world.updateComparatorOutputLevel(pos, this);
+				}
+
+				super.onReplaced(state, world, pos, newState, isMoving);
+			}
+		}
+
+		@Override
+		public boolean hasComparatorInputOverride(BlockState state) {
+			return true;
+		}
+
+		@Override
+		public int getComparatorInputOverride(BlockState blockState, World world, BlockPos pos) {
+			TileEntity tileentity = world.getTileEntity(pos);
+			if (tileentity instanceof CustomTileEntity)
+				return Container.calcRedstoneFromInventory((CustomTileEntity) tileentity);
+			else
+				return 0;
+		}
+
 	}
 
-	@Override
-	public boolean hasAnalogOutputSignal(BlockState state) {
-		return true;
-	}
+	public static class CustomTileEntity extends LockableLootTileEntity implements ISidedInventory {
 
-	@Override
-	public int getAnalogOutputSignal(BlockState blockState, Level world, BlockPos pos) {
-		BlockEntity tileentity = world.getBlockEntity(pos);
-		if (tileentity instanceof HeatCondenserBlockEntity be)
-			return AbstractContainerMenu.getRedstoneSignalFromContainer(be);
-		else
-			return 0;
+		private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
+
+		protected CustomTileEntity() {
+			super(tileEntityType);
+		}
+
+		@Override
+		public void read(BlockState blockState, CompoundNBT compound) {
+			super.read(blockState, compound);
+
+			if (!this.checkLootAndRead(compound)) {
+				this.stacks = NonNullList.withSize(this.getSizeInventory(), ItemStack.EMPTY);
+			}
+
+			ItemStackHelper.loadAllItems(compound, this.stacks);
+
+		}
+
+		@Override
+		public CompoundNBT write(CompoundNBT compound) {
+			super.write(compound);
+
+			if (!this.checkLootAndWrite(compound)) {
+				ItemStackHelper.saveAllItems(compound, this.stacks);
+			}
+
+			return compound;
+		}
+
+		@Override
+		public SUpdateTileEntityPacket getUpdatePacket() {
+			return new SUpdateTileEntityPacket(this.pos, 0, this.getUpdateTag());
+		}
+
+		@Override
+		public CompoundNBT getUpdateTag() {
+			return this.write(new CompoundNBT());
+		}
+
+		@Override
+		public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
+			this.read(this.getBlockState(), pkt.getNbtCompound());
+		}
+
+		@Override
+		public int getSizeInventory() {
+			return stacks.size();
+		}
+
+		@Override
+		public boolean isEmpty() {
+			for (ItemStack itemstack : this.stacks)
+				if (!itemstack.isEmpty())
+					return false;
+			return true;
+		}
+
+		@Override
+		public ITextComponent getDefaultName() {
+			return new StringTextComponent("heat_condenser");
+		}
+
+		@Override
+		public int getInventoryStackLimit() {
+			return 64;
+		}
+
+		@Override
+		public Container createMenu(int id, PlayerInventory player) {
+			return new HeatCondenserGuiGui.GuiContainerMod(id, player, new PacketBuffer(Unpooled.buffer()).writeBlockPos(this.getPos()));
+		}
+
+		@Override
+		public ITextComponent getDisplayName() {
+			return new StringTextComponent("Heat Condenser");
+		}
+
+		@Override
+		protected NonNullList<ItemStack> getItems() {
+			return this.stacks;
+		}
+
+		@Override
+		protected void setItems(NonNullList<ItemStack> stacks) {
+			this.stacks = stacks;
+		}
+
+		@Override
+		public boolean isItemValidForSlot(int index, ItemStack stack) {
+			return true;
+		}
+
+		@Override
+		public int[] getSlotsForFace(Direction side) {
+			return IntStream.range(0, this.getSizeInventory()).toArray();
+		}
+
+		@Override
+		public boolean canInsertItem(int index, ItemStack stack, @Nullable Direction direction) {
+			return this.isItemValidForSlot(index, stack);
+		}
+
+		@Override
+		public boolean canExtractItem(int index, ItemStack stack, Direction direction) {
+			return true;
+		}
+
+		private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+
+		@Override
+		public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
+			if (!this.removed && facing != null && capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+				return handlers[facing.ordinal()].cast();
+
+			return super.getCapability(capability, facing);
+		}
+
+		@Override
+		public void remove() {
+			super.remove();
+			for (LazyOptional<? extends IItemHandler> handler : handlers)
+				handler.invalidate();
+		}
+
 	}
 
 }
