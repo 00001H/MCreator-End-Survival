@@ -39,7 +39,7 @@ public class PlayerJoinProcedure {
 		}
 		Entity entity = (Entity) dependencies.get("entity");
 		if (entity instanceof PlayerEntity && !entity.world.isRemote()) {
-			((PlayerEntity) entity).sendStatusMessage(new StringTextComponent("[Mod Notice/End Survival]Use /go_end to go to the end"), (false));
+			((PlayerEntity) entity).sendStatusMessage(new StringTextComponent("[Mod Notice/End Survival] Use /go_end to go to the end"), (false));
 		}
 		if (!(entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 				.orElse(new EndSurvivalModVariables.PlayerVariables())).IsntFirst) {

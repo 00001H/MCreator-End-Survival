@@ -17,26 +17,6 @@
       }
     },
     {
-      "name": "FreezePlayer",
-      "type": "procedure",
-      "sortid": 5,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "freeze_player",
-      "metadata": {
-        "dependencies": [
-          {
-            "name": "entity",
-            "type": "entity"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      }
-    },
-    {
       "name": "ToEndRightClickedInAir",
       "type": "procedure",
       "sortid": 6,
@@ -728,9 +708,25 @@
       "name": "JEI",
       "type": "code",
       "sortid": 69,
-      "compiles": false,
+      "compiles": true,
       "locked_code": true,
       "registry_name": "jei"
+    },
+    {
+      "name": "TeleportPlayer",
+      "type": "procedure",
+      "sortid": 70,
+      "compiles": true,
+      "locked_code": false,
+      "registry_name": "teleport_player",
+      "metadata": {
+        "dependencies": [
+          {
+            "name": "entity",
+            "type": "entity"
+          }
+        ]
+      }
     }
   ],
   "variable_elements": [

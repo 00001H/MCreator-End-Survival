@@ -27,10 +27,10 @@ public class GrantOverworldTimeProcedure {
 		grant = 0;
 		if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
 				.getItem() == OverworldPassv1Item.block) {
-			grant = 6000;
+			grant = 3500;
 		} else if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
 				.getItem() == OverworldPassv2Item.block) {
-			grant = 12000;
+			grant = 11000;
 		} else if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
 				.getItem() == OverworldPassv3Item.block) {
 			grant = 27000;

@@ -10,19 +10,19 @@
     "recipeShapeless": false,
     "recipeSlots": [
       {
-        "value": "Blocks.DIAMOND_BLOCK"
+        "value": "Items.DIAMOND"
       },
       {
         "value": "CUSTOM:EndEssence"
       },
       {
-        "value": "Blocks.DIAMOND_BLOCK"
+        "value": "Items.DIAMOND"
       },
       {
         "value": "Items.ENDER_EYE"
       },
       {
-        "value": "CUSTOM:OverworldPassv1"
+        "value": "Blocks.DIAMOND_BLOCK"
       },
       {
         "value": "Items.ENDER_EYE"
