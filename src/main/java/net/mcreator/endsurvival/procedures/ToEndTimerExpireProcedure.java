@@ -43,6 +43,16 @@ public class ToEndTimerExpireProcedure {
 			return;
 		}
 		Entity entity = (Entity) dependencies.get("entity");
+		if ((entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+				.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining < 0) {
+			{
+				double _setval = 0;
+				entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
+					capability.overworldPassRemaining = _setval;
+					capability.syncPlayerVariables(entity);
+				});
+			}
+		}
 		if ((entity.world.getDimensionKey()) == (World.OVERWORLD)) {
 			if ((entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining > 0) {
