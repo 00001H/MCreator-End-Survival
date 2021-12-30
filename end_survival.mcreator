@@ -709,34 +709,6 @@
       }
     },
     {
-      "name": "SetWorldSpawnSilent",
-      "type": "procedure",
-      "sortid": 67,
-      "compiles": true,
-      "locked_code": false,
-      "registry_name": "set_world_spawn_silent",
-      "metadata": {
-        "dependencies": [
-          {
-            "name": "x",
-            "type": "number"
-          },
-          {
-            "name": "y",
-            "type": "number"
-          },
-          {
-            "name": "z",
-            "type": "number"
-          },
-          {
-            "name": "world",
-            "type": "world"
-          }
-        ]
-      }
-    },
-    {
       "name": "SpawnpointSetter",
       "type": "block",
       "sortid": 66,
@@ -751,6 +723,14 @@
       "compiles": true,
       "locked_code": false,
       "registry_name": "spawnpoint_setter_recipe"
+    },
+    {
+      "name": "JEI",
+      "type": "code",
+      "sortid": 69,
+      "compiles": false,
+      "locked_code": true,
+      "registry_name": "jei"
     }
   ],
   "variable_elements": [

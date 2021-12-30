@@ -1,9 +1,20 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
+
+import net.minecraft.world.World;
+import net.minecraft.entity.boss.dragon.EnderDragonEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class CreationProcedure {
-
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
 		@SubscribeEvent
@@ -30,13 +41,10 @@ public class CreationProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure Creation!");
 			return;
 		}
-
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if (entity instanceof EnderDragonEntity) {
 			if (entity instanceof LivingEntity)
 				((LivingEntity) entity).setHealth((float) 0);
 		}
 	}
-
 }

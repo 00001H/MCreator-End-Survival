@@ -1,15 +1,31 @@
 
 package net.mcreator.endsurvival.gui;
 
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+
+import net.minecraft.world.World;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.gui.widget.button.Button;
+import net.minecraft.client.gui.screen.inventory.ContainerScreen;
+import net.minecraft.client.Minecraft;
+
 import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.HashMap;
+
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.matrix.MatrixStack;
 
 @OnlyIn(Dist.CLIENT)
 public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.GuiContainerMod> {
-
 	private World world;
 	private int x, y, z;
 	private PlayerEntity entity;
-
 	private final static HashMap guistate = EndCrafterGuiGui.guistate;
 
 	public EndCrafterGuiGuiWindow(EndCrafterGuiGui.GuiContainerMod container, PlayerInventory inventory, ITextComponent text) {
@@ -30,7 +46,6 @@ public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.Gui
 		this.renderBackground(ms);
 		super.render(ms, mouseX, mouseY, partialTicks);
 		this.renderHoveredTooltip(ms, mouseX, mouseY);
-
 	}
 
 	@Override
@@ -38,12 +53,10 @@ public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.Gui
 		RenderSystem.color4f(1, 1, 1, 1);
 		RenderSystem.enableBlend();
 		RenderSystem.defaultBlendFunc();
-
 		Minecraft.getInstance().getTextureManager().bindTexture(texture);
 		int k = (this.width - this.xSize) / 2;
 		int l = (this.height - this.ySize) / 2;
 		this.blit(ms, k, l, 0, 0, this.xSize, this.ySize, this.xSize, this.ySize);
-
 		RenderSystem.disableBlend();
 	}
 
@@ -53,7 +66,6 @@ public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.Gui
 			this.minecraft.player.closeScreen();
 			return true;
 		}
-
 		return super.keyPressed(key, b, c);
 	}
 
@@ -76,7 +88,6 @@ public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.Gui
 	public void init(Minecraft minecraft, int width, int height) {
 		super.init(minecraft, width, height);
 		minecraft.keyboardListener.enableRepeatEvents(true);
-
 		this.addButton(new Button(this.guiLeft + 88, this.guiTop + 36, 50, 20, new StringTextComponent("craft"), e -> {
 			if (true) {
 				EndSurvivalMod.PACKET_HANDLER.sendToServer(new EndCrafterGuiGui.ButtonPressedMessage(0, x, y, z));
@@ -84,5 +95,4 @@ public class EndCrafterGuiGuiWindow extends ContainerScreen<EndCrafterGuiGui.Gui
 			}
 		}));
 	}
-
 }

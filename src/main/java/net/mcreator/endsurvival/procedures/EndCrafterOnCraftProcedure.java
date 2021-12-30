@@ -1,6 +1,22 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.inventory.container.Slot;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.block.Blocks;
+
+import net.mcreator.endsurvival.item.OverworldPassv3Item;
+import net.mcreator.endsurvival.item.OverworldPassv2Item;
+import net.mcreator.endsurvival.item.OverworldPassv1Item;
+import net.mcreator.endsurvival.item.EndEssenceItem;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.function.Supplier;
+import java.util.Map;
 
 public class EndCrafterOnCraftProcedure {
 
@@ -10,9 +26,7 @@ public class EndCrafterOnCraftProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure EndCrafterOnCraft!");
 			return;
 		}
-
 		Entity entity = (Entity) dependencies.get("entity");
-
 		boolean success = false;
 		double i = 0;
 		double Consumption = 0;
@@ -569,5 +583,4 @@ public class EndCrafterOnCraftProcedure {
 			}
 		}
 	}
-
 }

@@ -1,6 +1,31 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.items.ItemHandlerHelper;
+
+import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.potion.Effects;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.network.play.server.SPlayerAbilitiesPacket;
+import net.minecraft.network.play.server.SPlaySoundEventPacket;
+import net.minecraft.network.play.server.SPlayEntityEffectPacket;
+import net.minecraft.network.play.server.SChangeGameStatePacket;
+import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.block.Blocks;
+
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
+import java.util.Collections;
 
 public class ToEndRightClickedInAirProcedure {
 
@@ -15,10 +40,8 @@ public class ToEndRightClickedInAirProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure ToEndRightClickedInAir!");
 			return;
 		}
-
 		IWorld world = (IWorld) dependencies.get("world");
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if (!((World.THE_END) == (entity.world.getDimensionKey()))) {
 			if (!(entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EndSurvivalModVariables.PlayerVariables())).IsntFirst) {
@@ -84,7 +107,6 @@ public class ToEndRightClickedInAirProcedure {
 				Entity _ent = entity;
 				if (!_ent.world.isRemote && _ent instanceof ServerPlayerEntity) {
 					RegistryKey<World> destinationType = World.THE_END;
-
 					ServerWorld nextWorld = _ent.getServer().getWorld(destinationType);
 					if (nextWorld != null) {
 						((ServerPlayerEntity) _ent).connection.sendPacket(new SChangeGameStatePacket(SChangeGameStatePacket.field_241768_e_, 0));
@@ -100,9 +122,7 @@ public class ToEndRightClickedInAirProcedure {
 			}
 			if (world instanceof ServerWorld) {
 				IWorld _worldorig = world;
-
 				world = ((ServerWorld) world).getServer().getWorld(World.THE_END);
-
 				if (world != null) {
 					{
 						Entity _ent = entity;
@@ -113,7 +133,6 @@ public class ToEndRightClickedInAirProcedure {
 						}
 					}
 				}
-
 				world = _worldorig;
 			}
 			if (entity instanceof LivingEntity)
@@ -128,5 +147,4 @@ public class ToEndRightClickedInAirProcedure {
 				((LivingEntity) entity).addPotionEffect(new EffectInstance(Effects.RESISTANCE, (int) 400, (int) 127, (true), (false)));
 		}
 	}
-
 }

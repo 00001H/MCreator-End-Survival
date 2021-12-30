@@ -1,9 +1,22 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.TickEvent;
+
+import net.minecraft.world.World;
+import net.minecraft.world.IWorld;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.stream.Stream;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.AbstractMap;
 
 public class FreezePlayerProcedure {
-
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
 		@SubscribeEvent
@@ -37,17 +50,13 @@ public class FreezePlayerProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure FreezePlayer!");
 			return;
 		}
-
 		IWorld world = (IWorld) dependencies.get("world");
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if ((entity.world.getDimensionKey()) == (World.OVERWORLD) && (entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 				.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining == 0) {
-
 			ToEndRightClickedInAirProcedure
 					.executeProcedure(Stream.of(new AbstractMap.SimpleEntry<>("world", world), new AbstractMap.SimpleEntry<>("entity", entity))
 							.collect(HashMap::new, (_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
 		}
 	}
-
 }

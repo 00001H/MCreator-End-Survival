@@ -1,17 +1,23 @@
 
 package net.mcreator.endsurvival.item;
 
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraftforge.registries.ObjectHolder;
+
+import net.minecraft.item.Rarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Item;
+import net.minecraft.block.BlockState;
+
+import net.mcreator.endsurvival.EndSurvivalModElements;
 
 @EndSurvivalModElements.ModElement.Tag
 public class EndEssenceNuggetItem extends EndSurvivalModElements.ModElement {
-
 	@ObjectHolder("end_survival:end_essence_nugget")
 	public static final Item block = null;
 
 	public EndEssenceNuggetItem(EndSurvivalModElements instance) {
 		super(instance, 53);
-
 	}
 
 	@Override
@@ -20,7 +26,6 @@ public class EndEssenceNuggetItem extends EndSurvivalModElements.ModElement {
 	}
 
 	public static class ItemCustom extends Item {
-
 		public ItemCustom() {
 			super(new Item.Properties().group(ItemGroup.MATERIALS).maxStackSize(64).rarity(Rarity.EPIC));
 			setRegistryName("end_essence_nugget");
@@ -40,7 +45,5 @@ public class EndEssenceNuggetItem extends EndSurvivalModElements.ModElement {
 		public float getDestroySpeed(ItemStack par1ItemStack, BlockState par2Block) {
 			return 1F;
 		}
-
 	}
-
 }

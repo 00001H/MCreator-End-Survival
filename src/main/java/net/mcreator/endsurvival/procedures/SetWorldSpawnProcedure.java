@@ -1,6 +1,19 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
+
+import net.minecraft.world.storage.ISpawnWorldInfo;
+import net.minecraft.world.IWorld;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.ChatType;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Util;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
 
 public class SetWorldSpawnProcedure {
 
@@ -30,13 +43,11 @@ public class SetWorldSpawnProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure SetWorldSpawn!");
 			return;
 		}
-
 		IWorld world = (IWorld) dependencies.get("world");
 		double x = dependencies.get("x") instanceof Integer ? (int) dependencies.get("x") : (double) dependencies.get("x");
 		double y = dependencies.get("y") instanceof Integer ? (int) dependencies.get("y") : (double) dependencies.get("y");
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if (world.getWorldInfo() instanceof ISpawnWorldInfo)
 			((ISpawnWorldInfo) world.getWorldInfo()).setSpawn(new BlockPos((int) x, (int) y, (int) z), 0);
 		if (!world.isRemote()) {
@@ -47,5 +58,4 @@ public class SetWorldSpawnProcedure {
 						ChatType.SYSTEM, Util.DUMMY_UUID);
 		}
 	}
-
 }

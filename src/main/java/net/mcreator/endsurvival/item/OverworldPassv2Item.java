@@ -1,17 +1,37 @@
 
 package net.mcreator.endsurvival.item;
 
-import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraftforge.registries.ObjectHolder;
+
+import net.minecraft.world.World;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResult;
+import net.minecraft.item.Rarity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Item;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.block.BlockState;
+
+import net.mcreator.endsurvival.procedures.GrantOverworldTimeProcedure;
+import net.mcreator.endsurvival.EndSurvivalModElements;
+
+import java.util.stream.Stream;
+import java.util.Map;
+import java.util.List;
+import java.util.HashMap;
+import java.util.AbstractMap;
 
 @EndSurvivalModElements.ModElement.Tag
 public class OverworldPassv2Item extends EndSurvivalModElements.ModElement {
-
 	@ObjectHolder("end_survival:overworld_passv_2")
 	public static final Item block = null;
 
 	public OverworldPassv2Item(EndSurvivalModElements instance) {
 		super(instance, 47);
-
 	}
 
 	@Override
@@ -20,7 +40,6 @@ public class OverworldPassv2Item extends EndSurvivalModElements.ModElement {
 	}
 
 	public static class ItemCustom extends Item {
-
 		public ItemCustom() {
 			super(new Item.Properties().group(ItemGroup.TOOLS).maxStackSize(5).rarity(Rarity.COMMON));
 			setRegistryName("overworld_passv_2");
@@ -59,7 +78,5 @@ public class OverworldPassv2Item extends EndSurvivalModElements.ModElement {
 					(_m, _e) -> _m.put(_e.getKey(), _e.getValue()), Map::putAll));
 			return ar;
 		}
-
 	}
-
 }

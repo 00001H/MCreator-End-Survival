@@ -1,9 +1,20 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
+
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class PlayerJoinProcedure {
-
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
 		@SubscribeEvent
@@ -26,9 +37,7 @@ public class PlayerJoinProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure PlayerJoin!");
 			return;
 		}
-
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if (entity instanceof PlayerEntity && !entity.world.isRemote()) {
 			((PlayerEntity) entity).sendStatusMessage(new StringTextComponent("[Mod Notice/End Survival]Use /go_end to go to the end"), (false));
 		}
@@ -43,5 +52,4 @@ public class PlayerJoinProcedure {
 			}
 		}
 	}
-
 }

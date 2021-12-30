@@ -1,18 +1,49 @@
 
 package net.mcreator.endsurvival.block;
 
+import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraftforge.common.ToolType;
+
+import net.minecraft.world.World;
+import net.minecraft.world.IBlockReader;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.math.BlockRayTraceResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.Hand;
+import net.minecraft.util.ActionResultType;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.loot.LootContext;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Item;
+import net.minecraft.item.BlockItem;
+import net.minecraft.inventory.container.INamedContainerProvider;
+import net.minecraft.inventory.container.Container;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Block;
+
+import net.mcreator.endsurvival.gui.EndCrafterGuiGui;
+import net.mcreator.endsurvival.EndSurvivalModElements;
+
+import java.util.List;
+import java.util.Collections;
+
+import io.netty.buffer.Unpooled;
 
 @EndSurvivalModElements.ModElement.Tag
 public class EnderCrafterBlock extends EndSurvivalModElements.ModElement {
-
 	@ObjectHolder("end_survival:ender_crafter")
 	public static final Block block = null;
 
 	public EnderCrafterBlock(EndSurvivalModElements instance) {
 		super(instance, 50);
-
 	}
 
 	@Override
@@ -23,11 +54,9 @@ public class EnderCrafterBlock extends EndSurvivalModElements.ModElement {
 	}
 
 	public static class CustomBlock extends Block {
-
 		public CustomBlock() {
 			super(Block.Properties.create(Material.IRON).sound(SoundType.METAL).hardnessAndResistance(3.55f, 9f).setLightLevel(s -> 1).harvestLevel(1)
 					.harvestTool(ToolType.PICKAXE).setRequiresTool());
-
 			setRegistryName("ender_crafter");
 		}
 
@@ -38,7 +67,6 @@ public class EnderCrafterBlock extends EndSurvivalModElements.ModElement {
 
 		@Override
 		public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-
 			List<ItemStack> dropsOriginal = super.getDrops(state, builder);
 			if (!dropsOriginal.isEmpty())
 				return dropsOriginal;
@@ -49,11 +77,9 @@ public class EnderCrafterBlock extends EndSurvivalModElements.ModElement {
 		public ActionResultType onBlockActivated(BlockState blockstate, World world, BlockPos pos, PlayerEntity entity, Hand hand,
 				BlockRayTraceResult hit) {
 			super.onBlockActivated(blockstate, world, pos, entity, hand, hit);
-
 			int x = pos.getX();
 			int y = pos.getY();
 			int z = pos.getZ();
-
 			if (entity instanceof ServerPlayerEntity) {
 				NetworkHooks.openGui((ServerPlayerEntity) entity, new INamedContainerProvider() {
 					@Override
@@ -68,10 +94,7 @@ public class EnderCrafterBlock extends EndSurvivalModElements.ModElement {
 					}
 				}, new BlockPos(x, y, z));
 			}
-
 			return ActionResultType.SUCCESS;
 		}
-
 	}
-
 }

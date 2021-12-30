@@ -1,9 +1,22 @@
 package net.mcreator.endsurvival.procedures;
 
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
+
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class BanReturnProcedure {
-
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
 		@SubscribeEvent
@@ -36,10 +49,8 @@ public class BanReturnProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure BanReturn!");
 			return;
 		}
-
 		RegistryKey<World> dimension = (RegistryKey<World>) dependencies.get("dimension");
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if (entity instanceof PlayerEntity) {
 			if ((dimension) == (World.OVERWORLD) && (entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining == 0) {
@@ -54,5 +65,4 @@ public class BanReturnProcedure {
 			}
 		}
 	}
-
 }

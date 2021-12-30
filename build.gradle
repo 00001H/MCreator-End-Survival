@@ -7,6 +7,17 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+repositories {
+  maven {
+    name = "Progwml6 maven"
+    url = "https://dvs1.progwml6.com/files/maven/"
+  }
+  maven {
+    name = "ModMaven"
+    url = "https://modmaven.k-4u.nl"
+  }
+}
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
@@ -59,7 +70,11 @@ minecraft {
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.16.5-36.2.20'
+  minecraft 'net.minecraftforge:forge:1.16.5-36.2.20'
+
+  compileOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.138:api")
+
+  runtimeOnly fg.deobf("mezz.jei:jei-1.16.5:7.7.1.138")
 }
 
 apply from: 'mcreator.gradle'

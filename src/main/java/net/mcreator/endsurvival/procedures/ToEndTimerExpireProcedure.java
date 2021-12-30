@@ -1,9 +1,19 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraftforge.eventbus.api.Event;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.event.TickEvent;
+
+import net.minecraft.world.World;
+import net.minecraft.entity.Entity;
+
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
+import java.util.HashMap;
 
 public class ToEndTimerExpireProcedure {
-
 	@Mod.EventBusSubscriber
 	private static class GlobalTrigger {
 		@SubscribeEvent
@@ -32,9 +42,7 @@ public class ToEndTimerExpireProcedure {
 				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure ToEndTimerExpire!");
 			return;
 		}
-
 		Entity entity = (Entity) dependencies.get("entity");
-
 		if ((entity.world.getDimensionKey()) == (World.OVERWORLD)) {
 			if ((entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining > 0) {
@@ -67,5 +75,4 @@ public class ToEndTimerExpireProcedure {
 			});
 		}
 	}
-
 }
