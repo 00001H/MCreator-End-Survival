@@ -2,6 +2,7 @@ package net.mcreator.endsurvival;
 
 import java.util.*;
 
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Blocks;
 import net.minecraft.item.Items;
@@ -90,7 +91,7 @@ public class JEI implements IModPlugin{
         private final String title;
         private final IDrawable background;
         public EnderCrafterJeiCategory(IGuiHelper hlpr){
-            this.title = "Ender Crafter";
+            this.title = new TranslationTextComponent("block.end_survival.ender_crafter").getString();
             this.background = hlpr.createDrawable(new ResourceLocation("end_survival","textures/end_crafter_gui_jei.png"),0,0,148,69);
         }
 
