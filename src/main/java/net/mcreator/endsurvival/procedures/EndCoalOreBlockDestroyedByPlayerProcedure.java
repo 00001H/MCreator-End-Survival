@@ -6,7 +6,6 @@ import net.minecraft.entity.item.ExperienceOrbEntity;
 
 import net.mcreator.endsurvival.EndSurvivalMod;
 
-import java.util.Random;
 import java.util.Map;
 
 public class EndCoalOreBlockDestroyedByPlayerProcedure {
@@ -38,7 +37,7 @@ public class EndCoalOreBlockDestroyedByPlayerProcedure {
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		if (!world.isRemote()) {
 			if (world instanceof World && !world.isRemote()) {
-				((World) world).addEntity(new ExperienceOrbEntity(((World) world), x, y, z, (int) ((new Random()).nextInt((int) 5 + 1) + 1)));
+				((World) world).addEntity(new ExperienceOrbEntity(((World) world), x, y, z, (int) (+1)));
 			}
 		}
 	}
