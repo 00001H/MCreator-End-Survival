@@ -37,7 +37,7 @@ public class EndCoalOreBlockDestroyedByPlayerProcedure {
 		double z = dependencies.get("z") instanceof Integer ? (int) dependencies.get("z") : (double) dependencies.get("z");
 		if (!world.isRemote()) {
 			if (world instanceof World && !world.isRemote()) {
-				((World) world).addEntity(new ExperienceOrbEntity(((World) world), x, y, z, (int) (+1)));
+				((World) world).addEntity(new ExperienceOrbEntity(((World) world), x, y, z, (int) Math.round(Math.random() * 3)));
 			}
 		}
 	}
