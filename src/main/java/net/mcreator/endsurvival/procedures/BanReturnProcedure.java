@@ -5,35 +5,62 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.event.entity.EntityTravelToDimensionEvent;
 
-import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.World;
+import net.minecraft.util.RegistryKey;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.Entity;
 
-import net.mcreator.endsurvival.network.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
 
-import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.HashMap;
 
-@Mod.EventBusSubscriber
 public class BanReturnProcedure {
-	@SubscribeEvent
-	public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
-		Entity entity = event.getEntity();
-		execute(event, event.getDimension(), entity);
+	@Mod.EventBusSubscriber
+	private static class GlobalTrigger {
+		@SubscribeEvent
+		public static void onEntityTravelToDimension(EntityTravelToDimensionEvent event) {
+			Entity entity = event.getEntity();
+			World world = entity.world;
+			double i = entity.getPosX();
+			double j = entity.getPosY();
+			double k = entity.getPosZ();
+			Map<String, Object> dependencies = new HashMap<>();
+			dependencies.put("x", i);
+			dependencies.put("y", j);
+			dependencies.put("z", k);
+			dependencies.put("dimension", event.getDimension());
+			dependencies.put("world", world);
+			dependencies.put("entity", entity);
+			dependencies.put("event", event);
+			executeProcedure(dependencies);
+		}
 	}
 
-	public static void execute(ResourceKey<Level> dimension, Entity entity) {
-		execute(null, dimension, entity);
-	}
-
-	private static void execute(@Nullable Event event, ResourceKey<Level> dimension, Entity entity) {
-		if (dimension == null || entity == null)
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("dimension") == null) {
+			if (!dependencies.containsKey("dimension"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency dimension for procedure BanReturn!");
 			return;
-		if (entity instanceof Player) {
-			if ((dimension) == (Level.OVERWORLD) && (entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+		}
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure BanReturn!");
+			return;
+		}
+		RegistryKey<World> dimension = (RegistryKey<World>) dependencies.get("dimension");
+		Entity entity = (Entity) dependencies.get("entity");
+		if (entity instanceof PlayerEntity) {
+			if ((dimension) == (World.OVERWORLD) && (entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining == 0) {
-				if (event != null && event.isCancelable()) {
-					event.setCanceled(true);
+				if (dependencies.get("event") != null) {
+					Object _obj = dependencies.get("event");
+					if (_obj instanceof Event) {
+						Event _evt = (Event) _obj;
+						if (_evt.isCancelable())
+							_evt.setCanceled(true);
+					}
 				}
 			}
 		}

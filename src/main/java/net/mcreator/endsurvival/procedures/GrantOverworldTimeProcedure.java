@@ -1,42 +1,54 @@
 package net.mcreator.endsurvival.procedures;
 
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Hand;
+import net.minecraft.item.ItemStack;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.Entity;
 
-import net.mcreator.endsurvival.network.EndSurvivalModVariables;
-import net.mcreator.endsurvival.init.EndSurvivalModItems;
+import net.mcreator.endsurvival.item.OverworldPassv3Item;
+import net.mcreator.endsurvival.item.OverworldPassv2Item;
+import net.mcreator.endsurvival.item.OverworldPassv1Item;
+import net.mcreator.endsurvival.EndSurvivalModVariables;
+import net.mcreator.endsurvival.EndSurvivalMod;
+
+import java.util.Map;
 
 public class GrantOverworldTimeProcedure {
-	public static void execute(Entity entity) {
-		if (entity == null)
+
+	public static void executeProcedure(Map<String, Object> dependencies) {
+		if (dependencies.get("entity") == null) {
+			if (!dependencies.containsKey("entity"))
+				EndSurvivalMod.LOGGER.warn("Failed to load dependency entity for procedure GrantOverworldTime!");
 			return;
+		}
+		Entity entity = (Entity) dependencies.get("entity");
 		double grant = 0;
 		grant = 0;
-		if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
-				.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_1) {
+		if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
+				.getItem() == OverworldPassv1Item.block) {
 			grant = 3500;
-		} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
-				.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_2) {
+		} else if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
+				.getItem() == OverworldPassv2Item.block) {
 			grant = 11000;
-		} else if ((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)
-				.getItem() == EndSurvivalModItems.OVERWORLD_PASSV_3) {
+		} else if (((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)
+				.getItem() == OverworldPassv3Item.block) {
 			grant = 27000;
 		}
 		if (grant > 0) {
-			if (entity instanceof LivingEntity _entity) {
-				ItemStack _setstack = (entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY);
-				_setstack.setCount((int) (((entity instanceof LivingEntity _livEnt ? _livEnt.getMainHandItem() : ItemStack.EMPTY)).getCount() - 1));
-				_entity.setItemInHand(InteractionHand.MAIN_HAND, _setstack);
-				if (_entity instanceof ServerPlayer _serverPlayer)
-					_serverPlayer.getInventory().setChanged();
+			if (entity instanceof LivingEntity) {
+				ItemStack _setstack = ((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY);
+				_setstack.setCount(
+						(int) ((((entity instanceof LivingEntity) ? ((LivingEntity) entity).getHeldItemMainhand() : ItemStack.EMPTY)).getCount()
+								- 1));
+				((LivingEntity) entity).setHeldItem(Hand.MAIN_HAND, _setstack);
+				if (entity instanceof ServerPlayerEntity)
+					((ServerPlayerEntity) entity).inventory.markDirty();
 			}
 		}
 		{
-			double _setval = (entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
-					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining + grant;
+			double _setval = ((entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null)
+					.orElse(new EndSurvivalModVariables.PlayerVariables())).overworldPassRemaining + grant);
 			entity.getCapability(EndSurvivalModVariables.PLAYER_VARIABLES_CAPABILITY, null).ifPresent(capability -> {
 				capability.overworldPassRemaining = _setval;
 				capability.syncPlayerVariables(entity);

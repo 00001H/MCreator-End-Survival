@@ -2,13 +2,13 @@ package net.mcreator.endsurvival;
 
 import java.util.*;
 
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
+import net.minecraft.item.ItemStack;
 
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 import mezz.jei.api.IModPlugin;
@@ -24,12 +24,13 @@ import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
 
+import net.mcreator.endsurvival.EndSurvivalModElements;
 import net.mcreator.endsurvival.item.OverworldPassv3Item;
 import net.mcreator.endsurvival.item.OverworldPassv2Item;
 import net.mcreator.endsurvival.item.OverworldPassv1Item;
 import net.mcreator.endsurvival.item.EndEssenceItem;
 import net.mcreator.endsurvival.block.EnderCrafterBlock;
-import net.minecraft.network.chat.Component;
+import net.minecraft.client.gui.IGuiEventListener;
 
 @mezz.jei.api.JeiPlugin
 public class JEI implements IModPlugin{
@@ -60,21 +61,21 @@ public class JEI implements IModPlugin{
             inputs.add(new ItemStack(Items.APPLE));//1
             inputs.add(new ItemStack(Items.CHORUS_FRUIT));//2
             inputs.add(new ItemStack(Blocks.GRASS_BLOCK.asItem()));//3
-            inputs.add(new ItemStack(new EndEssenceItem()));//4
-            outputs.add(new ItemStack(new OverworldPassv1Item()));//5
+            inputs.add(new ItemStack(EndEssenceItem.block));//4
+            outputs.add(new ItemStack(OverworldPassv1Item.block));//5
             rcps.add(new EnderCrafterJeiCategory.EnderCrafterRecipeWrapper(inputs,outputs));
         }
         {//recipe 2
             ArrayList<ItemStack> inputs = new ArrayList<>();
             ArrayList<ItemStack> outputs = new ArrayList<>();
-            inputs.add(new ItemStack(new OverworldPassv1Item()));//0
+            inputs.add(new ItemStack(OverworldPassv1Item.block));//0
             inputs.add(new ItemStack(Blocks.BIRCH_SAPLING.asItem()));//1
             inputs.add(new ItemStack(Blocks.WHITE_WOOL.asItem()));//2
-            inputs.add(new ItemStack(new OverworldPassv1Item()));//3
-            ItemStack es = new ItemStack(new EndEssenceItem());
+            inputs.add(new ItemStack(OverworldPassv1Item.block));//3
+            ItemStack es = new ItemStack(EndEssenceItem.block);
             es.setCount(2);
             inputs.add(es);//4
-            outputs.add(new ItemStack(new OverworldPassv2Item()));//5
+            outputs.add(new ItemStack(OverworldPassv2Item.block));//5
             rcps.add(new EnderCrafterJeiCategory.EnderCrafterRecipeWrapper(inputs,outputs));
         }
         return rcps;
@@ -82,15 +83,15 @@ public class JEI implements IModPlugin{
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration reg){
-    	reg.addRecipeCatalyst(new ItemStack(new EnderCrafterBlock().asItem()),EnderCrafterJeiCategory.Uid);
+    	reg.addRecipeCatalyst(new ItemStack(EnderCrafterBlock.block),EnderCrafterJeiCategory.Uid);
     }
 
     public static class EnderCrafterJeiCategory implements IRecipeCategory<EnderCrafterJeiCategory.EnderCrafterRecipeWrapper>{
         private static ResourceLocation Uid = new ResourceLocation("end_survival","endercraftercategory");
-        private final Component title;
+        private final String title;
         private final IDrawable background;
         public EnderCrafterJeiCategory(IGuiHelper hlpr){
-            this.title = new TranslatableComponent("block.end_survival.ender_crafter");
+            this.title = new TranslationTextComponent("block.end_survival.ender_crafter").getString();
             this.background = hlpr.createDrawable(new ResourceLocation("end_survival","textures/end_crafter_gui_jei.png"),0,0,148,69);
         }
 
@@ -105,7 +106,7 @@ public class JEI implements IModPlugin{
         }
 
         @Override
-        public Component getTitle(){
+        public String getTitle(){
             return title;
         }
 
