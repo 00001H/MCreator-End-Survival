@@ -2,6 +2,7 @@ package net.mcreator.endsurvival;
 
 import java.util.*;
 
+import net.minecraft.client.gui.IGuiEventListener;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.block.Blocks;
@@ -30,7 +31,6 @@ import net.mcreator.endsurvival.item.OverworldPassv2Item;
 import net.mcreator.endsurvival.item.OverworldPassv1Item;
 import net.mcreator.endsurvival.item.EndEssenceItem;
 import net.mcreator.endsurvival.block.EnderCrafterBlock;
-import net.minecraft.client.gui.IGuiEventListener;
 
 @mezz.jei.api.JeiPlugin
 public class JEI implements IModPlugin{
